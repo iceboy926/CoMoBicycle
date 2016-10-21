@@ -16,7 +16,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    
+    _uiServer = [[UIInitServer alloc] initWithApplication:application andLaunchOption:launchOptions];
+    
+    
     return YES;
 }
 
