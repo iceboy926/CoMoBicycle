@@ -30,4 +30,13 @@
     return array;
 };
 
++(void)DeleteAcount
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    [userDefaults removeObjectForKey:@"Account"];
+    
+    [userDefaults synchronize];
+}
+
 @end

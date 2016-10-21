@@ -20,4 +20,7 @@
 +(NSArray *)getAccount;
 
 
++(void)DeleteAcount;
+
+
 @end
