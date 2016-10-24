@@ -8,6 +8,16 @@
 
 #import "COBaseViewController.h"
 
+@interface COBaseViewController()
+
+@end
+
 @implementation COBaseViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+}
 
 @end

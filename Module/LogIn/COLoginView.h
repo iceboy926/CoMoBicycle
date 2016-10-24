@@ -10,4 +10,6 @@
 
 @interface COLoginView : UIView
 
+@property (nonatomic, copy) void (^loginBtnClickedBlock)();
+
 @end

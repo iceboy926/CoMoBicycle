@@ -10,14 +10,11 @@
 
 @interface COAccount : NSObject
 
-/**
- *  存储账号信息
- *  @param account 需要存储的账号信息：第一个值为用户名；第二个值为密码的Hash值
- */
-+(void)saveAccount:(NSArray *)account;
+
++(void)saveAccount:(NSDictionary *)account;
 
 
-+(NSArray *)getAccount;
++(NSDictionary *)getAccount;
 
 
 +(void)DeleteAcount;

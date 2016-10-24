@@ -10,24 +10,28 @@
 @implementation COAccount
 
 
-+ (void)saveAccount:(NSArray *)account{
++ (void)saveAccount:(NSDictionary *)account{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     
     //保存数据 用户信息MD5；用户名；用户密码的hash值
     [userDefaults setObject:account  forKey:@"Account" ];
-    NSString *username = [account objectAtIndex:0];
-    NSString *password = [account objectAtIndex:1];
+    NSString *username = account[@"username"];
+    NSString *usertoken = account[@"usertoken"];
+    NSNumber *islogin = account[@"logstatus"];
     
-    [userDefaults setObject:[username md5]  forKey:@"userName" ];
-    [userDefaults setObject:[password md5]  forKey:@"passWord" ];
+    [userDefaults setObject:username  forKey:@"username" ];
+    [userDefaults setObject:usertoken forKey:@"usertoken"];
+    [userDefaults setObject:islogin forKey:@"logstatus"];
+    
+    
     [userDefaults synchronize];
 };
 
 
-+ (NSArray *)getAccount{
++ (NSDictionary *)getAccount{
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSArray *array = [userDefaults objectForKey:@"Account"];
-    return array;
+    NSDictionary *dic = [userDefaults objectForKey:@"Account"];
+    return dic;
 };
 
 +(void)DeleteAcount

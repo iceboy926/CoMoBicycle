@@ -18,6 +18,11 @@
 
 @property (nonatomic, strong) NSString *invalidMsg;
 
+@property (nonatomic, strong) NSNumber *netStatus;
+
 @property (nonatomic, strong) NSNumber *loginStatus;
+
+
+- (void)login;
 
 @end
