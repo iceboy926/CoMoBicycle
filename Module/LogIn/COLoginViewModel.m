@@ -13,20 +13,19 @@
 
 - (void)login
 {
-    //user password check
     if([[self.username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""] || [[self.password stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""])
     {
-        self.invalid = @(NO);
-        self.invalidMsg = @"账号或密码为空";
         
+        self.invalidMsg = @"账号或密码为空";
+        self.invalid = @YES;
         return ;
     }
     
-    if([self CheckUserName:self.username])
+    if(![self CheckUserName:self.username])
     {
-        self.invalid = @(NO);
-        self.invalidMsg = @"手机号码格式不正确";
         
+        self.invalidMsg = @"手机号码格式不正确";
+        self.invalid = @YES;
         return ;
     }
 
@@ -55,23 +54,26 @@
             }
             else
             {
+                self.invalidMsg = @"用户名或密码错误";
                 self.loginStatus = @(NO);
             }
         
         } failBlock:^(NSError *error){
             
-            self.netStatus = @(NO);
-        
+            self.invalidMsg = @"网络状态异常";
+            self.netStatus = @(YES);
         }];
         
     }
 }
 
+#pragma  mark  username phonenum check
+
 - (BOOL)CheckUserName:(NSString *)username
 {
     NSString *Regex = @"1\\d{10}";
     
-    NSPredicate *phonenumbercheck = [NSPredicate predicateWithFormat:@"SELFMATCHES %@", Regex];
+    NSPredicate *phonenumbercheck = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", Regex];
     
     return [phonenumbercheck evaluateWithObject:username];
 }

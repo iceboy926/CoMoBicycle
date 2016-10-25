@@ -7,15 +7,21 @@
 //
 
 #import "COBikeMainViewController.h"
-#import "COBikeMainViewController.h"
+
+@interface COBikeMainViewController()
+
+@end
 
 @implementation COBikeMainViewController
 
-- (UIViewController *)BikeMainViewController
+
+- (void)viewDidLoad
 {
-    COBikeMainViewController *cobikeMain = [[COBikeMainViewController alloc] init];
+    [super viewDidLoad];
     
-    return cobikeMain;
+    self.view.backgroundColor = [UIColor whiteColor];
 }
+
+
 
 @end

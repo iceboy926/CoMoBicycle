@@ -11,7 +11,7 @@
 @implementation Global
 
 
-NSString *const API_URL_LOGIN = @"https://192.168.1.11/8080/login";
-
+NSString *const API_URL_LOGIN = @"http://192.168.0.123:3000/Login";
+NSString *const API_URL_REGIST = @"http://192.168.0.123:3000/Regist";
 
 @end

@@ -18,6 +18,23 @@
 {
     [super viewDidLoad];
     
+    [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
+    [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
+}
+
+- (void)showInfoStatus:(NSString *)strMsg
+{
+    [SVProgressHUD showInfoWithStatus:strMsg];
+}
+
+- (void)showWaitStatus:(NSString *)strMsg
+{
+    [SVProgressHUD showWithStatus:strMsg];
+}
+
+- (void)hideWait
+{
+    [SVProgressHUD dismiss];
 }
 
 @end

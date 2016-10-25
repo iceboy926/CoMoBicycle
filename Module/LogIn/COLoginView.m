@@ -41,11 +41,15 @@
         [self addSubview:self.fingerPressLoginBtn];
         
         [self addSubViewConstraints];
+        
+        [self addViewGesture];
     }
     
     return self;
 }
 
+
+#pragma mark Control layout
 
 - (void)addSubViewConstraints
 {
@@ -92,18 +96,44 @@
         make.height.mas_equalTo(44);
     }];
     
+    [self.newUserBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.equalTo(_loginBtn.mas_left);
+        make.top.equalTo(_loginBtn.mas_bottom).with.offset(padding/2.0);
+        make.width.mas_equalTo(70);
+        make.height.mas_equalTo(35);
+    }];
     
     
+    [self.forgotPsdBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.right.equalTo(_loginBtn.mas_right);
+        make.top.equalTo(_newUserBtn.mas_top);
+        make.width.and.height.equalTo(_newUserBtn);
+    }];
+    
+
     [self.fingerPressLoginBtn mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.centerX.equalTo(self);
-        make.left.equalTo(self).with.offset(padding*3);
-        make.right.equalTo(self).with.offset(-padding*3);
+        make.left.equalTo(self).with.offset(padding*4);
+        make.right.equalTo(self).with.offset(-padding*4);
         make.bottom.equalTo(self).offset(-padding*2);
         make.height.mas_equalTo(44);
     }];
 }
 
+#pragma mark View TapGestureRecognizer
+
+- (void)addViewGesture
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewAction:)];
+    
+    [self addGestureRecognizer:tapGesture];
+}
+
+
+#pragma mark  control lazy load
 /**
  *  lazy loading
  */
@@ -183,8 +213,6 @@
         _psdTextField.secureTextEntry = YES;
         _psdTextField.returnKeyType = UIReturnKeyDone;
         
-        
-        
     }
     
     return _psdTextField;
@@ -216,7 +244,15 @@
 {
     if(_newUserBtn == nil)
     {
+        _newUserBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
+        _newUserBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        _newUserBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+        
+        [_newUserBtn setTitle:@"快速注册" forState:UIControlStateNormal];
+        [_newUserBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        [_newUserBtn addTarget:self action:@selector(newUserClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _newUserBtn;
@@ -226,7 +262,15 @@
 {
     if(_forgotPsdBtn == nil)
     {
+        _forgotPsdBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
+        _forgotPsdBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
+        _forgotPsdBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
+        
+        [_forgotPsdBtn setTitle:@"忘记密码" forState:UIControlStateNormal];
+        [_forgotPsdBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        
+        [_forgotPsdBtn addTarget:self action:@selector(forgotPsdClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     
     return _forgotPsdBtn;
@@ -254,37 +298,66 @@
 }
 
 
-/**
- *  textfield delegate
- *
- *  @param textField
- *
- *  @return
- */
+
+#pragma mark UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
     
+    [self loginClicked:nil];
+    
     return YES;
 }
 
 
-/**
- *  login clicked
- */
+
+#pragma mark Button-Action
 
 - (void)loginClicked:(id)sender
 {
+    [self resignResponse];
+    
     if(self.loginBtnClickedBlock)
     {
-        self.loginBtnClickedBlock();
+        self.loginBtnClickedBlock(_userTextField.text, _psdTextField.text);
     }
+}
+
+- (void)newUserClicked:(id)sender
+{
+    [self resignResponse];
+    
+}
+
+- (void)forgotPsdClicked:(id)sender
+{
+    [self resignResponse];
+    
 }
 
 - (void)fingerPressLoginBtnClicked:(id)sender
 {
+    [self resignResponse];
     
+    if(self.loginByBIOBtnClickedBlock)
+    {
+        self.loginByBIOBtnClickedBlock(_userTextField.text);
+    }
+}
+
+#pragma mark View TapGesture - Action
+
+- (void)touchViewAction:(UITapGestureRecognizer *)gesture
+{
+    [self resignResponse];
+}
+
+
+- (void)resignResponse
+{
+    [_userTextField resignFirstResponder];
+    [_psdTextField resignFirstResponder];
 }
 
 

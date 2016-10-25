@@ -10,6 +10,7 @@
 
 @interface COLoginView : UIView
 
-@property (nonatomic, copy) void (^loginBtnClickedBlock)();
+@property (nonatomic, copy) void (^loginBtnClickedBlock)(NSString *userName, NSString *password);
+@property (nonatomic, copy) void (^loginByBIOBtnClickedBlock)(NSString *userName);
 
 @end

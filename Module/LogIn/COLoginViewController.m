@@ -10,6 +10,8 @@
 #import "COLoginViewModel.h"
 #import "COLoginView.h"
 
+#import "COMediator+COBikeMainComponet.h"
+
 @interface COLoginViewController()
 
 @property (nonatomic, strong) UIImageView *bgView;
@@ -24,13 +26,33 @@
 {
     [super viewDidLoad];
     
-    [self.view insertSubview:self.bgView atIndex:0];
-    [self.view addSubview:self.loginView];
-    
-    [self initUI];
+    [self setupUI];
 }
 
-- (void)initUI
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self addUIConstraints];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self viewModeKVOHandle];
+}
+
+
+#pragma mark UI Initialize
+
+- (void)setupUI
+{
+    [self.view addSubview:self.bgView];
+    [self.view addSubview:self.loginView];
+}
+
+- (void)addUIConstraints
 {
     [self.bgView mas_makeConstraints:^(MASConstraintMaker *make) {
         
@@ -44,19 +66,26 @@
     
 }
 
-/**
- *  lazy load
- */
+
+
+#pragma mark View lazy load
 
 - (COLoginView *)loginView
 {
     if(_loginView == nil)
     {
+        WEAK_SELF(weakself);
         _loginView = [[COLoginView alloc] init];
-        _loginView.loginBtnClickedBlock = ^{
+        _loginView.loginBtnClickedBlock = ^(NSString *userName, NSString *password){
         
+           [weakself showWaitStatus:@"正在登录..."];
+           weakself.loginViewModel.username = userName;
+           weakself.loginViewModel.password = password;
+           [weakself.loginViewModel login];
+        };
         
-            NSLog(@" login out");
+        _loginView.loginByBIOBtnClickedBlock = ^(NSString *userName){
+        
         
         };
     }
@@ -74,6 +103,9 @@
     return _bgView;
 }
 
+
+#pragma mark  View Model lazy load
+
 - (COLoginViewModel *)loginViewModel
 {
     if(_loginViewModel == nil)
@@ -82,6 +114,44 @@
     }
     
     return _loginViewModel;
+}
+
+#pragma ViewModel KVO 
+
+- (void)viewModeKVOHandle
+{
+    [self.KVOController observe:self.loginViewModel keyPath:@"invalid" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change){
+        
+        //[self hideWait];
+        if([self.loginViewModel.invalid boolValue])
+        {
+            [self showInfoStatus:self.loginViewModel.invalidMsg];
+        }
+    }];
+    
+    [self.KVOController observe:self.loginViewModel keyPath:@"netStatus" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
+        
+        //[self hideWait];
+        if([self.loginViewModel.netStatus boolValue])
+        {
+            [self showInfoStatus:self.loginViewModel.invalidMsg];
+        }
+
+    }];
+    
+    [self.KVOController observe:self.loginViewModel keyPath:@"loginStatus" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change){
+    
+        [self hideWait];
+        if([self.loginViewModel.loginStatus boolValue])
+        {
+            UIViewController *mainVC = [[COMediator shareInstance] COBikeComponet_ViewController];
+            [self.navigationController pushViewController:mainVC animated:YES];
+        }
+        else
+        {
+            [self showInfoStatus:self.loginViewModel.invalidMsg];
+        }
+    }];
 }
 
 @end

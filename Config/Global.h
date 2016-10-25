@@ -11,5 +11,6 @@
 @interface Global : NSObject
 
 extern NSString *const API_URL_LOGIN;
+extern NSString *const API_URL_REGIST;
 
 @end

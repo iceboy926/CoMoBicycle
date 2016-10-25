@@ -9,4 +9,10 @@
 
 @interface COBaseViewController : UIViewController
 
+- (void)showInfoStatus:(NSString *)strMsg;
+
+- (void)showWaitStatus:(NSString *)strMsg;
+
+- (void)hideWait;
+
 @end
