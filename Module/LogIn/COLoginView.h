@@ -12,5 +12,7 @@
 
 @property (nonatomic, copy) void (^loginBtnClickedBlock)(NSString *userName, NSString *password);
 @property (nonatomic, copy) void (^loginByBIOBtnClickedBlock)(NSString *userName);
+@property (nonatomic, copy) void (^newuserBtnClickedBlock)();
+@property (nonatomic, copy) void (^forgotPsdBtnClickedBlock)();
 
 @end

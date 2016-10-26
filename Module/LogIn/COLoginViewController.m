@@ -11,6 +11,7 @@
 #import "COLoginView.h"
 
 #import "COMediator+COBikeMainComponet.h"
+#import "CORegisterStartViewController.h"
 
 @interface COLoginViewController()
 
@@ -84,6 +85,18 @@
            [weakself.loginViewModel login];
         };
         
+        
+        _loginView.newuserBtnClickedBlock = ^{
+        
+            [weakself gotoRegisterViewController];
+        };
+        
+        _loginView.forgotPsdBtnClickedBlock = ^{
+        
+        
+        };
+        
+        
         _loginView.loginByBIOBtnClickedBlock = ^(NSString *userName){
         
         
@@ -145,13 +158,20 @@
         if([self.loginViewModel.loginStatus boolValue])
         {
             UIViewController *mainVC = [[COMediator shareInstance] COBikeComponet_ViewController];
-            [self.navigationController pushViewController:mainVC animated:YES];
+            [self presentViewController:mainVC animated:YES completion:nil];
         }
         else
         {
             [self showInfoStatus:self.loginViewModel.invalidMsg];
         }
     }];
+}
+
+- (void)gotoRegisterViewController
+{
+    CORegisterStartViewController *registVC = [[CORegisterStartViewController alloc] init];
+    
+    [self presentViewController:registVC animated:YES completion:nil];
 }
 
 @end

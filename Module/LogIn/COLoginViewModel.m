@@ -33,35 +33,34 @@
         
         NSDictionary *dicParam = @{@"user": self.username, @"psd": [self.password md5]};
         
-        [CBNetworking requestWithUrl:API_URL_LOGIN params:dicParam useCache:YES httpMedthod:CBPOSTRequest progressBlock:nil successBlock:^(id response){
-        
+        [httpRequest requestWithURLString:API_URL_LOGIN parameters:nil type:HttpRequestTypeGet success:^(id response){
             if(response[@"success"])
             {
                 if([response[@"success"] intValue] == 0)
                 {
-                    self.loginStatus = @(NO);
+                    self.loginStatus = @NO;
                 }
                 else
                 {
                     //保存登录状态 和 token
                     
-                    NSDictionary *dicUser = @{@"username": response[@"username"], @"usertoken": response[@"usertoken"], @"logstatus": @(YES)};
+                    NSDictionary *dicUser = @{@"username": response[@"username"], @"usertoken": response[@"usertoken"], @"loginstatus": @YES};
                     
                     [COAccount saveAccount:dicUser];
                     
-                    self.loginStatus = @(YES);
+                    self.loginStatus = @YES;
                 }
             }
             else
             {
                 self.invalidMsg = @"用户名或密码错误";
-                self.loginStatus = @(NO);
+                self.loginStatus = @NO;
             }
         
-        } failBlock:^(NSError *error){
+        } failure:^(NSError *error){
             
             self.invalidMsg = @"网络状态异常";
-            self.netStatus = @(YES);
+            self.netStatus = @YES;
         }];
         
     }

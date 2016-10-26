@@ -127,4 +127,9 @@
     }
 }
 
++ (AppDelegate *)globalDelegate
+{
+    return (AppDelegate *)[UIApplication sharedApplication].delegate;
+}
+
 @end

@@ -25,8 +25,7 @@
 #define ISIOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)
 #define ISIOS7 ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)
 
-#define Server_Port   @"http://192.168.0.123:3000/"
-
+#define lightYellowColor UIColorFromRGB(0xF89022)
 
 
 #endif /* Macros_h */

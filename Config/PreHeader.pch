@@ -26,5 +26,6 @@
 #import "NSString+HashValue.h"
 #import "COAccount.h"
 #import "CBNetworking.h"
+#import "httpRequest.h"
 
 #endif /* PreHeader_pch */

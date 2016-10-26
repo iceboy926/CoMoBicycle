@@ -6,8 +6,10 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 @interface CONavigationBar : UIView
+
+- (instancetype)initWithTitle:(NSString *)strTitle;
 
 @end

@@ -328,12 +328,19 @@
 {
     [self resignResponse];
     
+    if(self.newuserBtnClickedBlock)
+    {
+        self.newuserBtnClickedBlock();
+    }
 }
 
 - (void)forgotPsdClicked:(id)sender
 {
     [self resignResponse];
-    
+    if(self.forgotPsdBtnClickedBlock)
+    {
+        self.forgotPsdBtnClickedBlock();
+    }
 }
 
 - (void)fingerPressLoginBtnClicked:(id)sender
