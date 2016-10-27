@@ -11,6 +11,22 @@
 @implementation CORegisterViewModel
 
 
++(instancetype)shareInstance
+{
+    static CORegisterViewModel *myViewModel = nil;
+    static dispatch_once_t once_time;
+    dispatch_once(&once_time, ^{
+    
+        if(myViewModel == nil)
+        {
+            myViewModel = [[CORegisterViewModel alloc] init];
+        }
+    
+    });
+    
+    return myViewModel;
+}
+
 - (void)registerUser
 {
     

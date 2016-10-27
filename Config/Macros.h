@@ -14,8 +14,8 @@
 #define WIDTH_TO_FIT(width)  (ceilf( [UIScreen mainScreen].bounds.size.width / 375.0f  * (width / 2) * 2) \
 / 2.0f)
 
-#define WEAK_SELF(weakSelf) __weak __typeof(&*self)weakSelf = self
-#define STRONG_SELF(strongSelf) __strong __typeof(&*self)strongSelf = self
+#define WEAK_SELF(weakSelf) __weak __typeof(&*self)weakSelf = self;
+#define STRONG_SELF(strongSelf) __strong __typeof(&*self)strongSelf = self;
 
 #define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)(((rgbValue) & 0xFF0000) >> 16))/255.0 green:((float)(((rgbValue) & 0xFF00) >> 8))/255.0 blue:((float)((rgbValue) & 0xFF))/255.0 alpha:1.0]
 

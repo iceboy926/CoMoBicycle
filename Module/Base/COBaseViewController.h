@@ -15,4 +15,7 @@
 
 - (void)hideWait;
 
+
+- (void)addPresentAnimation;
+
 @end

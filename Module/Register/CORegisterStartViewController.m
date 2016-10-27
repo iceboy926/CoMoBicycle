@@ -63,8 +63,24 @@
 {
     if(_navigaterBarView == nil)
     {
+        WEAK_SELF(weakself)
         _navigaterBarView = [[CONavigationBar alloc] initWithTitle:@"注册(1/3)"];
         
+        _navigaterBarView.backBtnClickedBlock = ^{
+        
+            [weakself dismissViewControllerAnimated:YES completion:nil];
+            
+        };
+        
+        _navigaterBarView.nextBtnClickedBlock = ^{
+            
+            CORegisterNextViewController *nextVC = [[CORegisterNextViewController alloc] init];
+            
+            [weakself addPresentAnimation];
+            
+            [weakself presentViewController:nextVC animated:NO completion:nil];
+            
+        };
     }
     
     return _navigaterBarView;
@@ -75,7 +91,7 @@
     if(_registerStartView == nil)
     {
         _registerStartView = [[CORegisterStartView alloc] init];
-        
+     
     }
     
     return _registerStartView;

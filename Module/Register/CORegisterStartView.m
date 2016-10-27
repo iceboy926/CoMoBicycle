@@ -44,6 +44,9 @@
         [self addSubview:self.fetchChecknumBtn];
         
         [self addUIContraints];
+        
+        [self addTouchViewGesture];
+        
     }
     
     return self;
@@ -86,12 +89,17 @@
     
     [self.checknumLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
+        make.centerY.equalTo(_checkView);
+        make.top.left.bottom.equalTo(_checkView).insets(UIEdgeInsetsMake(0, 10, 0, 0));
+        make.width.equalTo(_usernameLabel.mas_width);
         
     }];
     
     [self.checknumTextField mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        
+        make.centerY.equalTo(_checkView);
+        make.left.equalTo(_checknumLabel.mas_right);
+        make.height.equalTo(_checkView.mas_height);
     }];
     
     [self.fetchChecknumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -102,6 +110,16 @@
     }];
     
 }
+
+#pragma mark add touch gesture
+
+- (void)addTouchViewGesture
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewAction:)];
+    
+    [self addGestureRecognizer:tapGesture];
+}
+
 
 #pragma mark lazy load
 
@@ -131,7 +149,7 @@
         _usernameTextField.placeholder = @"11位手机号码";
         _usernameTextField.borderStyle = UITextBorderStyleNone;
         _usernameTextField.delegate = self;
-        _usernameTextField.keyboardType = UIKeyboardTypePhonePad;
+        _usernameTextField.keyboardType = UIKeyboardTypeNumberPad;
         _usernameTextField.returnKeyType = UIReturnKeyNext;
     }
     
@@ -198,7 +216,7 @@
     if(_fetchChecknumBtn == nil)
     {
         _fetchChecknumBtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        _fetchChecknumBtn.titleLabel.font = [UIFont systemFontOfSize:16.0];
+        _fetchChecknumBtn.titleLabel.font = [UIFont systemFontOfSize:14.0];
         _fetchChecknumBtn.titleLabel.adjustsFontSizeToFitWidth = YES;
         
         [_fetchChecknumBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
@@ -219,8 +237,8 @@
     
     button.userInteractionEnabled = YES;
     
-    checkCount = 59;
-    checkTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(reduceTime:) userInfo:button repeats:YES];
+    checkCount = 60;
+    checkTimer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(reduceTime:) userInfo:button repeats:YES];
     
     
 }
@@ -234,13 +252,22 @@
         [self.fetchChecknumBtn setTitle:@"重新获取验证码" forState:UIControlStateNormal];
         [checkTimer invalidate];
         [self.fetchChecknumBtn setUserInteractionEnabled:YES];
+        [self.fetchChecknumBtn setEnabled:YES];
     }
     else
     {
-        NSString *strMsg = [NSString stringWithFormat:@"%d秒后重新获取", checkCount];
+        NSString *strMsg = [NSString stringWithFormat:@"%lu秒后重新获取", checkCount];
         [self.fetchChecknumBtn setTitle:strMsg forState:UIControlStateNormal];
         [self.fetchChecknumBtn setUserInteractionEnabled:NO];
+        [self.fetchChecknumBtn setEnabled:NO];
     }
+}
+
+#pragma mark touch-action
+
+- (void)touchViewAction:(UITapGestureRecognizer *)gesture
+{
+    [self resignKeyboard];
 }
 
 #pragma mark UITextField Delegate
@@ -252,6 +279,21 @@
     return YES;
 }
 
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string   // return NO to not change text
+{
+    if(self.usernameTextField.text.length > 10)
+    {
+        [self.fetchChecknumBtn setBackgroundColor:UIColorFromRGB(0xEE9572)];
+        [self.fetchChecknumBtn setEnabled:YES];
+    }
+    else
+    {
+        [_fetchChecknumBtn setBackgroundColor:UIColorFromRGB(0xEFEFEF)];
+        [self.fetchChecknumBtn setEnabled:NO];
+    }
+    
+    return YES;
+}
 
 #pragma mark custom function
 

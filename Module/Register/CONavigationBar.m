@@ -26,7 +26,7 @@
     self = [super init];
     if(self)
     {
-        self.backgroundColor = UIColorFromRGB(0xFEFEFE);
+        self.backgroundColor = UIColorFromRGB(0x575757);
         
         titleStr = strTitle;
         
@@ -123,12 +123,18 @@
 
 - (void)backBtnClicked:(id)sender
 {
-    
+    if(self.backBtnClickedBlock)
+    {
+        self.backBtnClickedBlock();
+    }
 }
 
 - (void)nextBtnClicked:(id)sender
 {
-    
+    if(self.nextBtnClickedBlock)
+    {
+        self.nextBtnClickedBlock();
+    }
 }
 
 @end

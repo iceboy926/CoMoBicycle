@@ -12,4 +12,7 @@
 
 - (instancetype)initWithTitle:(NSString *)strTitle;
 
+@property (nonatomic, copy) void (^backBtnClickedBlock)();
+@property (nonatomic, copy) void (^nextBtnClickedBlock)();
+
 @end

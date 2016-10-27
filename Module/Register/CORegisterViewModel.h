@@ -22,6 +22,8 @@
 
 @property (nonatomic, strong) NSNumber *registerStatus;
 
++(instancetype)shareInstance;
+
 - (void)registerUser;
 
 @end

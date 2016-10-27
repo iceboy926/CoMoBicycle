@@ -37,4 +37,15 @@
     [SVProgressHUD dismiss];
 }
 
+- (void)addPresentAnimation
+{
+    CATransition *animation = [CATransition animation];
+    animation.duration = 0.5;
+    animation.timingFunction = UIViewAnimationCurveEaseInOut;
+    animation.type = @"pageCurl";
+    //animation.type = kCATransitionPush;
+    animation.subtype = kCATransitionFromRight;
+    [self.view.window.layer addAnimation:animation forKey:nil];
+}
+
 @end
