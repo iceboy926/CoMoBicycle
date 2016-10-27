@@ -38,6 +38,8 @@
         
         [self addUIConstraints];
         
+        [self addViewGesture];
+        
     }
     
     return self;
@@ -70,7 +72,36 @@
         make.width.equalTo(_backgroundView.mas_width);
     }];
     
+    [self.nickNameTextFiled mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.centerX.equalTo(self);
+        make.top.equalTo(_backgroundView.mas_bottom).offset(10);
+        make.width.equalTo(self.mas_width).multipliedBy(0.7);
+        make.height.mas_equalTo(35);
+        
+    }];
     
+    [self.finishedBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.centerX.equalTo(self);
+        make.left.right.equalTo(self).insets(UIEdgeInsetsMake(0, 20, 0, 20));
+        make.top.equalTo(_nickNameTextFiled.mas_bottom).offset(10);
+        make.height.mas_equalTo(40);
+    }];
+    
+}
+
+- (void)addViewGesture
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewClicked:)];
+    
+    [self addGestureRecognizer:tapGesture];
+}
+
+
+- (void)touchViewClicked:(UITapGestureRecognizer *)gesture
+{
+    [_nickNameTextFiled resignFirstResponder];
 }
 
 
