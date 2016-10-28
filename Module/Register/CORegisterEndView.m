@@ -125,6 +125,7 @@
         _headerImageBtn.layer.borderWidth = 1.0;
         _headerImageBtn.layer.borderColor = UIColorFromRGB(0xFFFFFF).CGColor;
         _headerImageBtn.layer.cornerRadius = 40.0;
+        _headerImageBtn.clipsToBounds = YES;
         
         [_headerImageBtn addTarget:self action:@selector(setHeaderImageBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         
