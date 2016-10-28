@@ -15,10 +15,8 @@
 }
 
 @property (nonatomic, strong) UILabel *usernameLabel;
-@property (nonatomic, strong) UITextField *usernameTextField;
 @property (nonatomic, strong) UIView *usernameView;
 @property (nonatomic, strong) UILabel *checknumLabel;
-@property (nonatomic, strong) UITextField *checknumTextField;
 @property (nonatomic, strong) UIView *checkView;
 @property (nonatomic, strong) UIButton *fetchChecknumBtn;
 
@@ -32,7 +30,7 @@
     self = [super init];
     if(self)
     {
-        self.backgroundColor = UIColorFromRGB(0xFFFFFF);
+        //self.backgroundColor = UIColorFromRGB(0xFFFFFF);
         
         [self.usernameView addSubview:self.usernameLabel];
         [self.usernameView addSubview:self.usernameTextField];
@@ -76,6 +74,7 @@
         make.centerY.equalTo(_usernameView);
         make.left.equalTo(_usernameLabel.mas_right);
         make.top.bottom.equalTo(_usernameView);
+        make.right.equalTo(_usernameView.mas_right).offset(-10);
     }];
     
     
@@ -100,6 +99,7 @@
         make.centerY.equalTo(_checkView);
         make.left.equalTo(_checknumLabel.mas_right);
         make.height.equalTo(_checkView.mas_height);
+        make.right.equalTo(_checkView.mas_right);
     }];
     
     [self.fetchChecknumBtn mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -161,7 +161,7 @@
     if(_usernameView == nil)
     {
         _usernameView = [[UIView alloc] init];
-        _usernameView.backgroundColor = UIColorFromRGB(0xEFEFEF);
+        _usernameView.backgroundColor = shadowViewColor;
         
     }
     
@@ -205,7 +205,7 @@
     if(_checkView == nil)
     {
         _checkView = [[UIView alloc] init];
-        _checkView.backgroundColor = UIColorFromRGB(0xEFEFEF);
+        _checkView.backgroundColor = shadowViewColor;
     }
     
     return _checkView;
@@ -221,7 +221,7 @@
         
         [_fetchChecknumBtn setTitle:@"获取验证码" forState:UIControlStateNormal];
         [_fetchChecknumBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [_fetchChecknumBtn setBackgroundColor:UIColorFromRGB(0xEFEFEF)];
+        [_fetchChecknumBtn setBackgroundColor:shadowViewColor];
         [_fetchChecknumBtn addTarget:self action:@selector(fetchChecknumBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -283,12 +283,12 @@
 {
     if(self.usernameTextField.text.length > 10)
     {
-        [self.fetchChecknumBtn setBackgroundColor:UIColorFromRGB(0xEE9572)];
+        [self.fetchChecknumBtn setBackgroundColor:orangeViewColor];
         [self.fetchChecknumBtn setEnabled:YES];
     }
     else
     {
-        [_fetchChecknumBtn setBackgroundColor:UIColorFromRGB(0xEFEFEF)];
+        [_fetchChecknumBtn setBackgroundColor:shadowViewColor];
         [self.fetchChecknumBtn setEnabled:NO];
     }
     

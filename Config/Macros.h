@@ -25,7 +25,11 @@
 #define ISIOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)
 #define ISIOS7 ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)
 
-#define lightYellowColor UIColorFromRGB(0xF89022)
+#define customButtonColor   UIColorFromRGB(0xF89022)
+#define backGroundColor     UIColorFromRGB(0xEFEFEF)
+#define navigaterBarColor   UIColorFromRGB(0x575757)
+#define shadowViewColor     UIColorFromRGB(0xB0B0B0)
+#define orangeViewColor     UIColorFromRGB(0xEE9572)
 
 
 #endif /* Macros_h */

@@ -171,7 +171,9 @@
 {
     CORegisterStartViewController *registVC = [[CORegisterStartViewController alloc] init];
     
-    [self presentViewController:registVC animated:YES completion:nil];
+    [self presentNewViewAnimation];
+    
+    [self presentViewController:registVC animated:NO completion:nil];
 }
 
 @end

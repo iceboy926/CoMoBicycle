@@ -13,10 +13,14 @@
 #import "CONavigationBar.h"
 #import "CORegisterNextView.h"
 
+#import "CORegisterViewModel.h"
+
+
 @interface CORegisterNextViewController()
 
 @property (nonatomic, strong) CONavigationBar       *navigaterBar;
 @property (nonatomic, strong) CORegisterNextView    *nextView;
+@property (nonatomic, strong) CORegisterViewModel   *registerViewModel;
 
 
 @end
@@ -30,8 +34,20 @@
     
     [self.view addSubview:self.navigaterBar];
     [self.view addSubview:self.nextView];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
     
     [self addUIContraints];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self addVMKVOHandle];
 }
 
 #pragma mark ui layout
@@ -51,6 +67,23 @@
     }];
 }
 
+- (void)addVMKVOHandle
+{
+    [self.KVOController observe:self.registerViewModel keyPath:@"invalidNext" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change){
+        
+        if([self.registerViewModel.invalidNext boolValue])
+        {
+            [self showInfoStatus:self.registerViewModel.invalidMsg];
+        }
+        else
+        {
+            [self gotoNextViewController];
+        }
+    
+    }];
+}
+
+
 #pragma mark ui lazy load
 
 - (CONavigationBar *)navigaterBar
@@ -62,17 +95,16 @@
         
         _navigaterBar.backBtnClickedBlock = ^{
             
-            [weakself dismissViewControllerAnimated:YES completion:nil];
+            [weakself dismissOldViewAnimation];
+            [weakself dismissViewControllerAnimated:NO completion:nil];
         };
         
         _navigaterBar.nextBtnClickedBlock = ^{
-            
-            CORegisterEndViewController *endVC = [[CORegisterEndViewController alloc] init];
-            
-            [weakself addPresentAnimation];
-            
-            [weakself presentViewController:endVC animated:NO completion:nil];
         
+            weakself.registerViewModel.password = weakself.nextView.userpsdTextField.text;
+        
+            [weakself.registerViewModel nextRegister];
+            
         };
     }
     
@@ -90,9 +122,26 @@
     return _nextView;
 }
 
+- (CORegisterViewModel *)registerViewModel
+{
+    if(_registerViewModel == nil)
+    {
+        _registerViewModel = [CORegisterViewModel shareInstance];
+    }
+    
+    return _registerViewModel;
+}
+
 #pragma mark custom function
 
-
+- (void)gotoNextViewController
+{
+    CORegisterEndViewController *endVC = [[CORegisterEndViewController alloc] init];
+    
+    [self presentNewViewAnimation];
+    
+    [self presentViewController:endVC animated:NO completion:nil];
+}
 
 
 @end

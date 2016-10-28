@@ -12,18 +12,28 @@
 
 @property (nonatomic, strong) NSString *username;
 
+@property (nonatomic, strong) NSString *checkSMS;
+
 @property (nonatomic, strong) NSString *nickname;
 
 @property (nonatomic, strong) NSString *password;
 
-@property (nonatomic, strong) NSNumber *invalid;
+@property (nonatomic, strong) NSData *headImageData;
+
+@property (nonatomic, strong) NSNumber *invalidStart;
+
+@property (nonatomic, strong) NSNumber *invalidNext;
 
 @property (nonatomic, strong) NSString *invalidMsg;
+
+@property (nonatomic, strong) NSNumber *smsCheck;
 
 @property (nonatomic, strong) NSNumber *registerStatus;
 
 +(instancetype)shareInstance;
 
-- (void)registerUser;
+- (void)startRegister;
+- (void)nextRegister;
+- (void)finishRegister;
 
 @end

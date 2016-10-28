@@ -11,11 +11,14 @@
 
 #import "CONavigationBar.h"
 #import "CORegisterStartView.h"
+#import "CORegisterViewModel.h"
 
 @interface CORegisterStartViewController()
 
 @property (nonatomic, strong) CONavigationBar *navigaterBarView;
 @property (nonatomic, strong) CORegisterStartView *registerStartView;
+@property (nonatomic, strong) CORegisterViewModel *registerViewModel;
+
 
 @end
 
@@ -38,7 +41,13 @@
     [self addUIConstraints];
 }
 
-
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self addVMKVOHandle];
+    
+}
 
 #pragma mark subview layout
 
@@ -57,6 +66,32 @@
     }];
 }
 
+- (void)addVMKVOHandle
+{
+    [self.KVOController observe:self.registerViewModel keyPath:@"invalidStart" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change){
+    
+        if([self.registerViewModel.invalidStart boolValue])
+        {
+            [self showInfoStatus:self.registerViewModel.invalidMsg];
+        }
+    
+    }];
+    
+    [self.KVOController observe:self.registerViewModel keyPath:@"smsCheck" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change){
+    
+        if([self.registerViewModel.smsCheck boolValue])
+        {
+            [self gotoNextViewController];
+        }
+        else
+        {
+            [self showInfoStatus:self.registerViewModel.invalidMsg];
+        }
+    
+    }];
+
+}
+
 #pragma mark subview lazy load
 
 - (CONavigationBar *)navigaterBarView
@@ -68,17 +103,18 @@
         
         _navigaterBarView.backBtnClickedBlock = ^{
         
-            [weakself dismissViewControllerAnimated:YES completion:nil];
+            [weakself dismissOldViewAnimation];
+            
+            [weakself dismissViewControllerAnimated:NO completion:nil];
             
         };
         
         _navigaterBarView.nextBtnClickedBlock = ^{
+        
+            weakself.registerViewModel.username = weakself.registerStartView.usernameTextField.text;
+            weakself.registerViewModel.checkSMS = weakself.registerStartView.checknumTextField.text;
             
-            CORegisterNextViewController *nextVC = [[CORegisterNextViewController alloc] init];
-            
-            [weakself addPresentAnimation];
-            
-            [weakself presentViewController:nextVC animated:NO completion:nil];
+            [weakself.registerViewModel startRegister];
             
         };
     }
@@ -95,6 +131,27 @@
     }
     
     return _registerStartView;
+}
+
+- (CORegisterViewModel *)registerViewModel
+{
+    if(_registerViewModel == nil)
+    {
+        _registerViewModel = [CORegisterViewModel shareInstance];
+    }
+    
+    return _registerViewModel;
+}
+
+#pragma mark custom fuction
+
+- (void)gotoNextViewController
+{
+    CORegisterNextViewController *nextVC = [[CORegisterNextViewController alloc] init];
+    
+    [self presentNewViewAnimation];
+    
+    [self presentViewController:nextVC animated:NO completion:nil];
 }
 
 @end

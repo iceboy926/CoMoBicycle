@@ -29,7 +29,7 @@
     self = [super init];
     if(self)
     {
-        self.backgroundColor = [UIColor clearColor];
+        //self.backgroundColor = [UIColor clearColor];
     
         [self addSubview:self.logoImageView];
         [self.bgView addSubview:self.userTextField];
@@ -230,7 +230,7 @@
         
         [_loginBtn setTitle:@"登录" forState:UIControlStateNormal];
         [_loginBtn setTitleColor:[UIColor whiteColor] forState: UIControlStateNormal];
-        [_loginBtn setBackgroundColor:UIColorFromRGB(0xF89022)];
+        [_loginBtn setBackgroundColor:customButtonColor];
         _loginBtn.layer.cornerRadius = 0.5;
         
         [_loginBtn addTarget:self action:@selector(loginClicked:) forControlEvents:UIControlEventTouchUpInside];

@@ -12,17 +12,15 @@
 
 @implementation UIInitServer
 
-
-- (instancetype)initWithApplication:(UIApplication *)application andLaunchOption:(NSDictionary *)launchOptions
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self = [super init];
-    if(self)
-    {
-        [self initWithApplication:application];
-    }
+    // init interface load
     
-    return self;
+    [self initWithApplication:application];
+    
+    return YES;
 }
+
 
 - (void)initWithApplication:(UIApplication *)application
 {

@@ -10,4 +10,11 @@
 
 @interface CORegisterEndView : UIView
 
+@property (nonatomic, copy) void (^finishedBtnClickedBlock)();
+@property (nonatomic, copy) void (^headImageBtnClickedBlock)();
+@property (nonatomic, strong) UITextField   *nickNameTextFiled;
+
+
+- (void)setHeadImage:(UIImage *)image;
+
 @end

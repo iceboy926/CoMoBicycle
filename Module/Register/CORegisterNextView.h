@@ -10,4 +10,6 @@
 
 @interface CORegisterNextView : UIView
 
+@property (nonatomic, strong) UITextField *userpsdTextField;
+
 @end

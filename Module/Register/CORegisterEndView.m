@@ -13,7 +13,6 @@
 @property (nonatomic, strong) UIView        *backgroundView;
 @property (nonatomic ,strong) UIButton      *headerImageBtn;
 @property (nonatomic, strong) UILabel       *setheaderImageLabel;
-@property (nonatomic, strong) UITextField   *nickNameTextFiled;
 @property (nonatomic, strong) UIButton      *finishedBtn;
 
 @end
@@ -26,7 +25,6 @@
     self = [super init];
     if(self)
     {
-        self.backgroundColor = UIColorFromRGB(0xEFEFEF);
         
         [self addSubview:self.backgroundView];
         
@@ -52,7 +50,7 @@
     [self.backgroundView mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.top.right.equalTo(self);
-        make.height.equalTo(self.mas_height).multipliedBy(0.65);
+        make.height.equalTo(self.mas_height).multipliedBy(0.4);
         
     }];
     
@@ -75,7 +73,7 @@
     [self.nickNameTextFiled mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.centerX.equalTo(self);
-        make.top.equalTo(_backgroundView.mas_bottom).offset(10);
+        make.top.equalTo(_backgroundView.mas_bottom).offset(30);
         make.width.equalTo(self.mas_width).multipliedBy(0.7);
         make.height.mas_equalTo(35);
         
@@ -85,7 +83,7 @@
        
         make.centerX.equalTo(self);
         make.left.right.equalTo(self).insets(UIEdgeInsetsMake(0, 20, 0, 20));
-        make.top.equalTo(_nickNameTextFiled.mas_bottom).offset(10);
+        make.top.equalTo(_nickNameTextFiled.mas_bottom).offset(20);
         make.height.mas_equalTo(40);
     }];
     
@@ -112,7 +110,7 @@
     if(_backgroundView == nil)
     {
         _backgroundView = [[UIView alloc] init];
-        _backgroundView.backgroundColor = UIColorFromRGB(0x575757);
+        _backgroundView.backgroundColor = navigaterBarColor;
     }
     
     return _backgroundView;
@@ -166,6 +164,7 @@
         _nickNameTextFiled.backgroundColor = [UIColor whiteColor];
         _nickNameTextFiled.returnKeyType = UIReturnKeyDone;
         _nickNameTextFiled.delegate = self;
+        _nickNameTextFiled.placeholder = @" 请输入用户昵称";
         
     }
     
@@ -183,7 +182,7 @@
         
         [_finishedBtn setTitle:@"完成" forState:UIControlStateNormal];
         [_finishedBtn setTitleColor:UIColorFromRGB(0xFFFFFF) forState:UIControlStateNormal];
-        [_finishedBtn setBackgroundColor:lightYellowColor];
+        [_finishedBtn setBackgroundColor:customButtonColor];
         
         [_finishedBtn addTarget:self action:@selector(fininshedBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -196,15 +195,43 @@
 
 - (void)setHeaderImageBtnClicked:(id)sender
 {
-    
+    if(self.headImageBtnClickedBlock)
+    {
+        self.headImageBtnClickedBlock();
+    }
 }
 
 - (void)fininshedBtnClicked:(id)sender
 {
+    if(self.finishedBtnClickedBlock)
+    {
+        self.finishedBtnClickedBlock();
+    }
+}
+
+#pragma mark UITextField delegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [UIView animateWithDuration:0.3 animations:^{
     
+        [_nickNameTextFiled resignFirstResponder];
+        
+    } completion:^(BOOL finished){
+    
+        [_finishedBtn sendActionsForControlEvents:UIControlEventTouchUpInside];
+    
+    }];
+    
+    return YES;
 }
 
 #pragma mark custom function
+
+- (void)setHeadImage:(UIImage *)image
+{
+    [_headerImageBtn setImage:image forState:UIControlStateNormal];
+}
 
 
 @end

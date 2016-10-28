@@ -1,13 +1,13 @@
 //
-//  UIInitServer.h
+//  BaiduMapServer.h
 //  CoMoBicycle
 //
-//  Created by 金玉衡 on 16/10/21.
+//  Created by 金玉衡 on 16/10/28.
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
-@interface UIInitServer : NSObject <UIApplicationDelegate>
+@interface BaiduMapServer : NSObject <UIApplicationDelegate>
 
 @end

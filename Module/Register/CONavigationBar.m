@@ -91,7 +91,7 @@
         
         _titleLabel.text = titleStr;
         _titleLabel.font = [UIFont systemFontOfSize:16.0];
-        _titleLabel.textColor = lightYellowColor;
+        _titleLabel.textColor = customButtonColor;
         _titleLabel.textAlignment = NSTextAlignmentCenter;
         _titleLabel.adjustsFontSizeToFitWidth = YES;
     }
@@ -111,7 +111,7 @@
         _nextBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
         
         [_nextBtn setTitle:@"下一步" forState:UIControlStateNormal];
-        [_nextBtn setTitleColor:lightYellowColor forState:UIControlStateNormal];
+        [_nextBtn setTitleColor:customButtonColor forState:UIControlStateNormal];
         [_nextBtn addTarget:self action:@selector(nextBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     

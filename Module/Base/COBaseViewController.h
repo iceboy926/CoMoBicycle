@@ -15,7 +15,8 @@
 
 - (void)hideWait;
 
+- (void)presentNewViewAnimation;
 
-- (void)addPresentAnimation;
+- (void)dismissOldViewAnimation;
 
 @end

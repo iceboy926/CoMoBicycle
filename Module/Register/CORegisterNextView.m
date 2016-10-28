@@ -11,7 +11,7 @@
 @interface CORegisterNextView() <UITextFieldDelegate>
 
 @property (nonatomic, strong) UILabel *userpsdLabel;
-@property (nonatomic, strong) UITextField *userpsdTextField;
+
 @property (nonatomic, strong) UIView    *userpsdView;
 
 @end
@@ -23,7 +23,6 @@
     self = [super init];
     if(self)
     {
-        self.backgroundColor = UIColorFromRGB(0xFFFFFF);
         
         [self addSubview:self.userpsdView];
         
@@ -122,12 +121,20 @@
     if(_userpsdView == nil)
     {
         _userpsdView = [[UIView alloc] init];
-        _userpsdView.backgroundColor = UIColorFromRGB(0xEFEFEF);
+        _userpsdView.backgroundColor = shadowViewColor;
     }
     
     return _userpsdView;
 }
 
+#pragma mark UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [_userpsdTextField resignFirstResponder];
+    
+    return YES;
+}
 
 
 @end

@@ -10,4 +10,8 @@
 
 @interface CORegisterStartView : UIView
 
+@property (nonatomic, strong) UITextField *usernameTextField;
+
+@property (nonatomic, strong) UITextField *checknumTextField;
+
 @end
