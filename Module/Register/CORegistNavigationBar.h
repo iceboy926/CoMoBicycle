@@ -6,13 +6,12 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import "COBaseNavigationBar.h"
 
-@interface CONavigationBar : UIView
+@interface CORegistNavigationBar :COBaseNavigationBar
 
 - (instancetype)initWithTitle:(NSString *)strTitle;
 
-@property (nonatomic, copy) void (^backBtnClickedBlock)();
 @property (nonatomic, copy) void (^nextBtnClickedBlock)();
 
 @end

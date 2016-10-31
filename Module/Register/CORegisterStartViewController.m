@@ -9,13 +9,13 @@
 #import "CORegisterStartViewController.h"
 #import "CORegisterNextViewController.h"
 
-#import "CONavigationBar.h"
+#import "CORegistNavigationBar.h"
 #import "CORegisterStartView.h"
 #import "CORegisterViewModel.h"
 
 @interface CORegisterStartViewController()
 
-@property (nonatomic, strong) CONavigationBar *navigaterBarView;
+@property (nonatomic, strong) CORegistNavigationBar *navigaterBarView;
 @property (nonatomic, strong) CORegisterStartView *registerStartView;
 @property (nonatomic, strong) CORegisterViewModel *registerViewModel;
 
@@ -94,12 +94,12 @@
 
 #pragma mark subview lazy load
 
-- (CONavigationBar *)navigaterBarView
+- (CORegistNavigationBar *)navigaterBarView
 {
     if(_navigaterBarView == nil)
     {
         WEAK_SELF(weakself)
-        _navigaterBarView = [[CONavigationBar alloc] initWithTitle:@"注册(1/3)"];
+        _navigaterBarView = [[CORegistNavigationBar alloc] initWithTitle:@"注册(1/3)"];
         
         _navigaterBarView.backBtnClickedBlock = ^{
         

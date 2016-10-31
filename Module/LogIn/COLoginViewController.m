@@ -12,6 +12,7 @@
 
 #import "COMediator+COBikeMainComponet.h"
 #import "CORegisterStartViewController.h"
+#import "COForgetPSDStartViewController.h"
 
 @interface COLoginViewController()
 
@@ -93,7 +94,7 @@
         
         _loginView.forgotPsdBtnClickedBlock = ^{
         
-        
+            [weakself gotoForgetPSDViewController];
         };
         
         
@@ -167,6 +168,8 @@
     }];
 }
 
+#pragma mark custom fun
+
 - (void)gotoRegisterViewController
 {
     CORegisterStartViewController *registVC = [[CORegisterStartViewController alloc] init];
@@ -175,5 +178,16 @@
     
     [self presentViewController:registVC animated:NO completion:nil];
 }
+
+- (void)gotoForgetPSDViewController
+{
+    COForgetPSDStartViewController *forgetVC = [[COForgetPSDStartViewController alloc] init];
+    
+    [self presentNewViewAnimation];
+    
+    [self presentViewController:forgetVC animated:NO completion:nil];
+}
+
+
 
 @end

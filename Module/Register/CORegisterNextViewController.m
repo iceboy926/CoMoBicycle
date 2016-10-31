@@ -10,7 +10,7 @@
 #import "CORegisterStartViewController.h"
 #import "CORegisterEndViewController.h"
 
-#import "CONavigationBar.h"
+#import "CORegistNavigationBar.h"
 #import "CORegisterNextView.h"
 
 #import "CORegisterViewModel.h"
@@ -18,7 +18,7 @@
 
 @interface CORegisterNextViewController()
 
-@property (nonatomic, strong) CONavigationBar       *navigaterBar;
+@property (nonatomic, strong) CORegistNavigationBar       *navigaterBar;
 @property (nonatomic, strong) CORegisterNextView    *nextView;
 @property (nonatomic, strong) CORegisterViewModel   *registerViewModel;
 
@@ -86,12 +86,12 @@
 
 #pragma mark ui lazy load
 
-- (CONavigationBar *)navigaterBar
+- (CORegistNavigationBar *)navigaterBar
 {
     if(_navigaterBar == nil)
     {
         WEAK_SELF(weakself)
-        _navigaterBar = [[CONavigationBar alloc] initWithTitle:@"注册(2/3)"];
+        _navigaterBar = [[CORegistNavigationBar alloc] initWithTitle:@"注册(2/3)"];
         
         _navigaterBar.backBtnClickedBlock = ^{
             
