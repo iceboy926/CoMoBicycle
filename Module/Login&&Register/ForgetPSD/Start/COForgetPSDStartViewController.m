@@ -10,6 +10,7 @@
 #import "COForgetStartView.h"
 #import "COForgetNavigationBar.h"
 #import "COForgetViewModel.h"
+#import "COForgetPSDNextViewController.h"
 
 @interface COForgetPSDStartViewController()
 
@@ -50,7 +51,7 @@
     [self.navigationBar mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.top.right.equalTo(self.view);
-        make.height.mas_equalTo(64);
+        make.height.mas_equalTo(NavBarHeight);
         
     }];
     
@@ -141,7 +142,11 @@
 
 - (void)gotoNextViewController
 {
+    COForgetPSDNextViewController *nextVC = [[COForgetPSDNextViewController alloc] init];
     
+    [self presentNewViewAnimation];
+    
+    [self presentViewController:nextVC animated:NO completion:nil];
 }
 
 @end

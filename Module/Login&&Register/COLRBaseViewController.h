@@ -7,7 +7,7 @@
 //
 
 
-@interface COBaseViewController : UIViewController
+@interface COLRBaseViewController : UIViewController
 
 - (void)showInfoStatus:(NSString *)strMsg;
 

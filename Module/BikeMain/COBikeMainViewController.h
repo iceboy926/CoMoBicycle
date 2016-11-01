@@ -6,8 +6,7 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import "COBaseViewController.h"
 
-@interface COBikeMainViewController : COBaseViewController
+@interface COBikeMainViewController : UIViewController
 
 @end

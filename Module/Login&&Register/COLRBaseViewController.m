@@ -8,13 +8,13 @@
 
 #define DURATION 0.7f
 
-#import "COBaseViewController.h"
+#import "COLRBaseViewController.h"
 
-@interface COBaseViewController()
+@interface COLRBaseViewController()
 
 @end
 
-@implementation COBaseViewController
+@implementation COLRBaseViewController
 
 - (void)viewDidLoad
 {

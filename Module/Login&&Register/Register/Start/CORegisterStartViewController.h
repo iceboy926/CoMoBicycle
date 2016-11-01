@@ -6,8 +6,8 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import "COBaseViewController.h"
+#import "COLRBaseViewController.h"
 
-@interface CORegisterStartViewController : COBaseViewController
+@interface CORegisterStartViewController : COLRBaseViewController
 
 @end

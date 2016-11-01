@@ -25,11 +25,23 @@
 #define ISIOS8 ([[[UIDevice currentDevice] systemVersion] doubleValue]>=8.0)
 #define ISIOS7 ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)
 
+#pragma mark color
+
 #define customButtonColor   UIColorFromRGB(0xF89022)
 #define backGroundColor     UIColorFromRGB(0xEFEFEF)
 #define navigaterBarColor   UIColorFromRGB(0x575757)
 #define shadowViewColor     UIColorFromRGB(0xB0B0B0)
 #define orangeViewColor     UIColorFromRGB(0xEE9572)
+
+
+#pragma mark frame
+
+#define NavBarHeight        64
+#define ButtonHeight        44
+
+#pragma mark font
+
+
 
 
 #endif /* Macros_h */

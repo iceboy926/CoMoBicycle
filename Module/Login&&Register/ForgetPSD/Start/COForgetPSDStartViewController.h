@@ -6,8 +6,8 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import "COBaseViewController.h"
+#import "COLRBaseViewController.h"
 
-@interface COForgetPSDStartViewController : COBaseViewController
+@interface COForgetPSDStartViewController : COLRBaseViewController
 
 @end

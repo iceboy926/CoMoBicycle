@@ -6,16 +6,16 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import "COBaseNavigationBar.h"
+#import "COLRBaseNavigationBar.h"
 
-@interface COBaseNavigationBar()
+@interface COLRBaseNavigationBar()
 
 @property (nonatomic, strong) UIButton *backBtn;
 @property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
-@implementation COBaseNavigationBar
+@implementation COLRBaseNavigationBar
 
 - (instancetype)init
 {

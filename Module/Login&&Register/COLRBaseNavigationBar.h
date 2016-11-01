@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface COBaseNavigationBar : UIView
+@interface COLRBaseNavigationBar : UIView
 
 @property (nonatomic, copy) void (^backBtnClickedBlock)();
 

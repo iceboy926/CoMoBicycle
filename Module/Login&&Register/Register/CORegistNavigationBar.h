@@ -6,9 +6,9 @@
 //  Copyright © 2016年 AutoMo. All rights reserved.
 //
 
-#import "COBaseNavigationBar.h"
+#import "COLRBaseNavigationBar.h"
 
-@interface CORegistNavigationBar :COBaseNavigationBar
+@interface CORegistNavigationBar :COLRBaseNavigationBar
 
 - (instancetype)initWithTitle:(NSString *)strTitle;
 

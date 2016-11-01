@@ -177,7 +177,7 @@
     {
         _authcodeLabel = [[UILabel alloc] init];
         _authcodeLabel.font = [UIFont systemFontOfSize:16.0];
-        _authcodeLabel.text = @"验证码";
+        _authcodeLabel.text = @"校验码";
         _authcodeLabel.backgroundColor = [UIColor clearColor];
     }
     
