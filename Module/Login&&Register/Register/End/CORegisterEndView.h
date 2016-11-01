@@ -14,7 +14,6 @@
 @property (nonatomic, copy) void (^headImageBtnClickedBlock)();
 @property (nonatomic, strong) UITextField   *nickNameTextFiled;
 
-
 - (void)setHeadImage:(UIImage *)image;
 
 @end

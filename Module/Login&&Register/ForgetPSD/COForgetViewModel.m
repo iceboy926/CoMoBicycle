@@ -10,6 +10,23 @@
 
 @implementation COForgetViewModel
 
+
++ (instancetype)shareInstance
+{
+    static COForgetViewModel *myInstance =nil;
+    dispatch_once_t once_t;
+    dispatch_once(&once_t, ^{
+    
+        if(myInstance == nil)
+        {
+            myInstance = [[COForgetViewModel alloc] init];
+        }
+    
+    });
+    
+    return myInstance;
+}
+
 - (void)forgetStart
 {
     if([[self.username stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]] isEqualToString:@""])

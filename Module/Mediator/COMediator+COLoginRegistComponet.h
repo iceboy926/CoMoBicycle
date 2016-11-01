@@ -8,9 +8,10 @@
 
 #import "COMediator.h"
 
-@interface COMediator (COLoginComponet)
+@interface COMediator (COLoginRegistComponet)
 
-- (UIViewController *)COLoginComponet_ViewController;
+- (UIViewController *)COLoginRegistComponet_LoginViewController;
 
+- (UIViewController *)COLoginRegistComponet_RegistViewController;
 
 @end

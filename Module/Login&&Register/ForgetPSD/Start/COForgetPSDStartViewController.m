@@ -123,7 +123,7 @@
 {
     if(_forgetViewModel == nil)
     {
-        _forgetViewModel = [[COForgetViewModel alloc] init];
+        _forgetViewModel = [COForgetViewModel shareInstance];
     }
     
     return _forgetViewModel;

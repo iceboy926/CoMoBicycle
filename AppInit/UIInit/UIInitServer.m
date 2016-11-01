@@ -7,7 +7,7 @@
 //
 
 #import "UIInitServer.h"
-#import "COMediator+COLoginComponet.h"
+#import "COMediator+COLoginRegistComponet.h"
 #import "COMediator+COBikeMainComponet.h"
 
 @implementation UIInitServer
@@ -29,7 +29,7 @@
     if([COAccount getAccount] == nil)
     {
         //登录界面
-        rootVC = [[COMediator shareInstance] COLoginComponet_ViewController];
+        rootVC = [[COMediator shareInstance] COLoginRegistComponet_LoginViewController];
     }
     else
     {

@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) NSString *invalidMsg;
 
++ (instancetype)shareInstance;
 
 - (void)forgetStart;
 

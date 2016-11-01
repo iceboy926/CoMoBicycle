@@ -79,7 +79,7 @@
     CGFloat pX,pY;
     for ( int i = 0; i<text.length; i++)
     {
-        pX = width/2.0 + rect.size.width/text.length * i;
+        pX = width/4.0 + rect.size.width/text.length * i;
         pY = height/2.0;//arc4random() % height;
         point = CGPointMake(pX, pY);
         
@@ -87,11 +87,11 @@
         NSString *textC = [NSString stringWithFormat:@"%C", c];
         
         NSShadow *shadow = [[NSShadow alloc] init];
-        shadow.shadowOffset = CGSizeMake(1, 3);
+        shadow.shadowOffset = CGSizeMake(1, 1);
         shadow.shadowBlurRadius = 3.0;
         shadow.shadowColor = kRandomColor;
         
-        [textC drawAtPoint:point withAttributes:@{NSFontAttributeName:[UIFont systemFontOfSize:20], NSForegroundColorAttributeName:kRandomColor, NSObliquenessAttributeName:@1, NSShadowAttributeName:shadow}];
+        [textC drawAtPoint:point withAttributes:@{NSFontAttributeName:[UIFont boldSystemFontOfSize:20.0], NSForegroundColorAttributeName:kRandomColor, NSObliquenessAttributeName:@1,  NSStrokeWidthAttributeName:@3, NSStrokeColorAttributeName:kRandomColor}];
     }
 
 }

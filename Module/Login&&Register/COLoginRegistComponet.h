@@ -8,8 +8,12 @@
 
 #import <Foundation/Foundation.h>
 
-@interface COLoginComponet : NSObject
+@interface COLoginRegistComponet : NSObject
 
--(UIViewController *)LoginViewController;
+- (UIViewController *)LoginViewController;
+
+- (UIViewController *)RegistViewController;
+
+- (UIViewController *)ForgetPSDViewController;
 
 @end

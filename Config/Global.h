@@ -12,5 +12,6 @@
 
 extern NSString *const API_URL_LOGIN;
 extern NSString *const API_URL_REGIST;
+extern NSString *const API_URL_FORGETPSD;
 
 @end

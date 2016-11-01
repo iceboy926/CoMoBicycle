@@ -60,10 +60,26 @@
     }];
 }
 
+#pragma mark KVO Controller
+
 - (void)addVMKVOHandle
 {
+    
+    [self.KVOController observe:self.registerViewModel keyPath:@"netStatus" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change) {
+       
+        if([self.registerViewModel.netStatus boolValue])
+        {
+            [self showInfoStatus:self.registerViewModel.invalidMsg];
+        }
+        
+    }];
+    
     [self.KVOController observe:self.registerViewModel keyPath:@"registerStatus" options:NSKeyValueObservingOptionNew block:^(id observer, id object, NSDictionary *change){
     
+        if([self.registerViewModel.registerStatus boolValue])
+        {
+            
+        }
     
     }];
     
@@ -193,6 +209,8 @@
 {
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark
 
 
 @end

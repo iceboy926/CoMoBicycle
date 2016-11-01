@@ -158,8 +158,7 @@
         [self hideWait];
         if([self.loginViewModel.loginStatus boolValue])
         {
-            UIViewController *mainVC = [[COMediator shareInstance] COBikeComponet_ViewController];
-            [self presentViewController:mainVC animated:YES completion:nil];
+            [self gotoMainViewController];
         }
         else
         {
@@ -186,6 +185,12 @@
     [self presentNewViewAnimation];
     
     [self presentViewController:forgetVC animated:NO completion:nil];
+}
+
+- (void)gotoMainViewController
+{
+    UIViewController *mainVC = [[COMediator shareInstance] COBikeComponet_ViewController];
+    [self presentViewController:mainVC animated:YES completion:nil];
 }
 
 

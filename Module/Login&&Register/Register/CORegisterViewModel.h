@@ -28,6 +28,8 @@
 
 @property (nonatomic, strong) NSNumber *smsCheck;
 
+@property (nonatomic, strong) NSNumber *netStatus;
+
 @property (nonatomic, strong) NSNumber *registerStatus;
 
 +(instancetype)shareInstance;

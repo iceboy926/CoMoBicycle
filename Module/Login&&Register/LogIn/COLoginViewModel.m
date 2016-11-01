@@ -44,7 +44,7 @@
                 {
                     //保存登录状态 和 token
                     
-                    NSDictionary *dicUser = @{@"username": response[@"username"], @"usertoken": response[@"usertoken"], @"loginstatus": @YES};
+                    NSDictionary *dicUser = @{@"username": self.username, @"usertoken": response[@"usertoken"], @"loginstatus": @YES};
                     
                     [COAccount saveAccount:dicUser];
                     

@@ -76,6 +76,51 @@
 
 - (void)finishRegister
 {
+    if(self.nickname == nil)
+    {
+        
+    }
+    
+    if(self.headImageData == nil)
+    {
+        
+    }
+    
+    if(self.username && self.password)
+    {
+        NSDictionary *dicParams = @{@"user": self.username, @"psd": [self.password md5]};
+        
+        [httpRequest requestWithURLString:API_URL_REGIST parameters:nil type:HttpRequestTypeGet success:^(id response){
+            
+            if(response[@"success"])
+            {
+                if([response[@"success"] intValue] == 0)
+                {
+                    self.registerStatus = @NO;
+                }
+                else
+                {
+                    NSDictionary *dicUser = @{@"username": self.username, @"usertoken": response[@"usertoken"], @"loginstatus": @YES};
+                    
+                    [COAccount saveAccount:dicUser];
+                    
+                    self.registerStatus = @YES;
+                }
+            }
+            else if(response[@"exist"])
+            {
+                self.invalidMsg = @"用户已存在";
+                self.registerStatus = @NO;
+            }
+        
+        } failure:^(NSError *error){
+            
+            self.invalidMsg = @"网络连接失败";
+            self.netStatus = @YES;
+        
+        }];
+    }
+    
     
 }
 
