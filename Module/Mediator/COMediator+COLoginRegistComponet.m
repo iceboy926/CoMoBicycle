@@ -8,7 +8,7 @@
 
 #import "COMediator+COLoginRegistComponet.h"
 
-#define Target @"COLoginRegistComponet"
+#define LoginRegist_Target @"COLoginRegistComponet"
 #define Login_Action @"LoginViewController"
 #define Regist_Action @"RegistViewController"
 #define ForgetPSD_Action @"ForgetPSDViewController"
@@ -18,7 +18,7 @@
 
 - (UIViewController *)COLoginRegistComponet_LoginViewController
 {
-    UIViewController *viewController = [self performTarget:Target action:Login_Action params:nil];
+    UIViewController *viewController = [self performTarget:LoginRegist_Target action:Login_Action params:nil];
     if([viewController isKindOfClass:[UIViewController class]])
     {
         return viewController;
@@ -31,7 +31,7 @@
 
 - (UIViewController *)COLoginRegistComponet_RegistViewController
 {
-    UIViewController *viewController = [self performTarget:Target action:Regist_Action params:nil];
+    UIViewController *viewController = [self performTarget:LoginRegist_Target action:Regist_Action params:nil];
     if([viewController isKindOfClass:[UIViewController class]])
     {
         return viewController;
