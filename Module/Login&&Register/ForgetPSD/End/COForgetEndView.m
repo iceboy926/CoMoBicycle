@@ -11,10 +11,10 @@
 @interface COForgetEndView() <UITextFieldDelegate>
 
 @property (nonatomic, strong) UILabel *userpsdoldLabel;
-@property (nonatomic, strong) UITextField *userpsdoldTextField;
+
 @property (nonatomic, strong) UIView    *userpsdoldView;
 @property (nonatomic, strong) UILabel *userpsdnewLabel;
-@property (nonatomic, strong) UITextField *userpsdnewTextField;
+
 @property (nonatomic, strong) UIView    *userpsdnewView;
 @property (nonatomic, strong) UIButton  *finishBtn;
 
@@ -38,6 +38,8 @@
         
         [self.userpsdnewView addSubview:self.userpsdnewLabel];
         [self.userpsdnewView addSubview:self.userpsdnewTextField];
+        
+        [self addSubview:self.finishBtn];
         
         [self addUIConstraints];
         

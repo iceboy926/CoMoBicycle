@@ -96,6 +96,7 @@
             {
                 if([response[@"success"] intValue] == 0)
                 {
+                    self.invalidMsg = @"用户注册失败";
                     self.registerStatus = @NO;
                 }
                 else

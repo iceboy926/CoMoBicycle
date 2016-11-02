@@ -12,6 +12,8 @@
 #import "CORegisterEndView.h"
 #import "CORegisterViewModel.h"
 
+#import "COMediator+COBikeMainComponet.h"
+
 
 @interface CORegisterEndViewController() <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
@@ -78,11 +80,14 @@
     
         if([self.registerViewModel.registerStatus boolValue])
         {
-            
+            [self gotoNextViewController];
+        }
+        else
+        {
+            [self showInfoStatus:self.registerViewModel.invalidMsg];
         }
     
     }];
-    
 }
 
 
@@ -210,7 +215,13 @@
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark
+#pragma mark main page
 
+- (void)gotoNextViewController
+{
+    UIViewController *mainVC = [[COMediator shareInstance] COBikeComponet_ViewController];
+    
+    [self presentViewController:mainVC animated:YES completion:nil];
+}
 
 @end

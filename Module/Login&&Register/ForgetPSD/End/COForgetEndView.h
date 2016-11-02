@@ -10,6 +10,8 @@
 
 @interface COForgetEndView : UIView
 
+@property (nonatomic, strong) UITextField *userpsdoldTextField;
+@property (nonatomic, strong) UITextField *userpsdnewTextField;
 @property (nonatomic, copy) void (^finishBtnClickedBlock)();
 
 @end

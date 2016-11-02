@@ -318,7 +318,8 @@
 
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string   // return NO to not change text
 {
-    if(self.usernameTextField.text.length > 10)
+    NSLog(@"usernameTextField text is %@", self.usernameTextField.text);
+    if(self.usernameTextField.text.length > 9)
     {
         [self.fetchChecknumBtn setBackgroundColor:orangeViewColor];
         [self.fetchChecknumBtn setEnabled:YES];
