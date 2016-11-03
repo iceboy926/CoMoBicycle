@@ -9,11 +9,14 @@
 #import "COBikeMainViewController.h"
 #import "COBMHeaderView.h"
 #import "COBMCustomView.h"
+#import "COBMViewModel.h"
+#import "AppDelegate.h"
 
 @interface COBikeMainViewController()
 
 @property (nonatomic, strong) COBMHeaderView *headView;
 @property (nonatomic, strong) COBMCustomView   *customView;
+@property (nonatomic, strong) COBMViewModel     *viewModel;
 
 @end
 
@@ -50,6 +53,7 @@
         
         make.left.top.right.equalTo(self.view);
         make.height.mas_equalTo(NavBarHeight);
+        
     }];
     
     [self.customView mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -67,7 +71,13 @@
 {
     if(_headView == nil)
     {
-        _headView = [[COBMHeaderView alloc] initWithTitle:@"COBicycle"];
+        NSData *dataImage = [self.viewModel getLocalUserImage];
+        _headView = [[COBMHeaderView alloc] initWithTitle:@"COBicycle" HeaderImage:dataImage];
+        
+        _headView.leftbtnClickBlock = ^{
+            
+            [[AppDelegate globalDelegate] toggleDrawLeft];
+        };
         
     }
     
@@ -82,6 +92,16 @@
     }
     
     return _customView;
+}
+
+- (COBMViewModel *)viewModel
+{
+    if(_viewModel == nil)
+    {
+        _viewModel = [COBMViewModel sharedInstance];
+    }
+    
+    return _viewModel;
 }
 
 

@@ -16,5 +16,6 @@
 @dynamic usename;
 @dynamic nickname;
 @dynamic headimage;
+@dynamic headimageurl;
 
 @end

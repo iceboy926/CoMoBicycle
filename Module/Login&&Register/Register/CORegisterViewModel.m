@@ -7,6 +7,8 @@
 //
 
 #import "CORegisterViewModel.h"
+#import "Userinfo.h"
+#import "UserinfoManager.h"
 
 @implementation CORegisterViewModel
 
@@ -88,7 +90,10 @@
     
     if(self.username && self.password)
     {
-        NSDictionary *dicParams = @{@"user": self.username, @"psd": [self.password md5]};
+        NSDictionary *dicParams = @{@"user": self.username,
+                                    @"psd": [self.password md5],
+                                    @"image":[NSString stringWithFormat:@"%@", self.headImageData]
+                                    };
         
         [httpRequest requestWithURLString:API_URL_REGIST parameters:nil type:HttpRequestTypeGet success:^(id response){
             
@@ -103,7 +108,11 @@
                 {
                     NSDictionary *dicUser = @{@"username": self.username, @"usertoken": response[@"usertoken"], @"loginstatus": @YES};
                     
+                    self.headImageUrl = response[@"avarturl"];
+                    
                     [COAccount saveAccount:dicUser];
+                    
+                    [self refreshLocalUserData];
                     
                     self.registerStatus = @YES;
                 }
@@ -121,6 +130,11 @@
         
         }];
     }
+}
+
+- (void)refreshLocalUserData
+{
+    Userinfo *userinfo = [[UserinfoManager sharedManager] addUserWithUser:self.username WithNick:self.nickname WithImageData:self.headImageData];
     
     
 }

@@ -11,6 +11,7 @@
 @interface COBMHeaderView()
 {
     NSString *strTitle;
+    NSData *headImageData;
 }
 
 @property (nonatomic, strong) UIButton *leftSliderBtn;
@@ -34,6 +35,26 @@
         
         [self addUIConstraints];
         
+    }
+    
+    return self;
+}
+
+- (instancetype)initWithTitle:(NSString *)title HeaderImage:(NSData *)headData
+{
+    self = [super init];
+    if(self)
+    {
+        strTitle = title;
+        
+        headImageData = headData;
+        
+        self.backgroundColor = navigaterBarColor;
+        
+        [self addSubview:self.leftSliderBtn];
+        [self addSubview:self.titleLabel];
+        
+        [self addUIConstraints];
     }
     
     return self;
@@ -71,12 +92,13 @@
     {
         _leftSliderBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         
-        _leftSliderBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+        _leftSliderBtn.layer.borderColor = navigaterBarColor.CGColor;
         _leftSliderBtn.layer.borderWidth = 1.0;
         _leftSliderBtn.layer.cornerRadius = 20;
         _leftSliderBtn.layer.masksToBounds = YES;
         
-        [_leftSliderBtn setImage:[UIImage imageNamed:@"goback"] forState:UIControlStateNormal];
+        [_leftSliderBtn setImage:[UIImage imageWithData:headImageData] forState:UIControlStateNormal];
+        
         [_leftSliderBtn addTarget:self action:@selector(leftSlideBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     
@@ -103,7 +125,10 @@
 
 - (void)leftSlideBtnClicked:(id)sender
 {
-
+    if(self.leftbtnClickBlock)
+    {
+        self.leftbtnClickBlock();
+    }
 }
 
 

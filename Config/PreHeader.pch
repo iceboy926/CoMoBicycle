@@ -28,5 +28,7 @@
 #import "COAccount.h"
 #import "CBNetworking.h"
 #import "httpRequest.h"
+#import "CoreDataManager.h"
+#import "UIImage+resize.h"
 
 #endif /* PreHeader_pch */

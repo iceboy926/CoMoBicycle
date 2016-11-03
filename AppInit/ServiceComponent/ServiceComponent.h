@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+#import "BaiduMapServer.h"
+#import "UIInitServer.h"
+
 @interface ServiceComponent : NSObject
 
 +(instancetype)shareInstance;

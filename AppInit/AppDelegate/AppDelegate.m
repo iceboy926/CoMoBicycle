@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ServiceComponent.h"
 
+
 @interface AppDelegate ()
 
 @end
@@ -100,10 +101,22 @@
 
 }
 
+#pragma mark member function
 
 + (AppDelegate *)globalDelegate
 {
     return (AppDelegate *)[UIApplication sharedApplication].delegate;
+}
+
+- (void)toggleDrawLeft
+{
+    id<UIApplicationDelegate> service;
+    for (service in [[ServiceComponent shareInstance] services]) {
+        if([service isKindOfClass:[UIInitServer class]])
+        {
+            [(UIInitServer *)service toggleLeftView];
+        }
+    }
 }
 
 @end

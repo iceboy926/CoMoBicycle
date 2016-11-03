@@ -10,4 +10,6 @@
 
 @interface UIInitServer : NSObject <UIApplicationDelegate>
 
+- (void)toggleLeftView;
+
 @end

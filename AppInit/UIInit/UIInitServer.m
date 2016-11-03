@@ -9,6 +9,13 @@
 #import "UIInitServer.h"
 #import "COMediator+COLoginRegistComponet.h"
 #import "COMediator+COBikeMainComponet.h"
+#import "COMediator+COUserSettingComponet.h"
+
+@interface UIInitServer()
+
+@property (nonatomic, strong)MMDrawerController *drawerController;
+
+@end
 
 @implementation UIInitServer
 
@@ -36,13 +43,18 @@
     else
     {
         //主界面
-        rootVC = [[COMediator shareInstance] COBikeComponet_ViewController];
+        self.drawerController.centerViewController = [[COMediator shareInstance] COBikeComponet_ViewController];
+        self.drawerController.leftDrawerViewController = [[COMediator shareInstance] COUserSettingComponet_ViewController];
+        
+        rootVC = self.drawerController;
     }
     
     application.delegate.window.rootViewController = rootVC;
     
     [application.delegate.window makeKeyAndVisible];
 }
+
+#pragma mark lauch image
 
 - (void)addLauchImageWithApplication:(UIApplication *)application Image:(UIImage *)image
 {
@@ -67,6 +79,24 @@
         }];
     
     });
+}
+
+#pragma mark lazy load
+
+- (MMDrawerController *)drawerController
+{
+    if(_drawerController == nil)
+    {
+        _drawerController = [[MMDrawerController alloc] init];
+        
+    }
+    
+    return _drawerController;
+}
+
+- (void)toggleLeftView
+{
+    [self.drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
 

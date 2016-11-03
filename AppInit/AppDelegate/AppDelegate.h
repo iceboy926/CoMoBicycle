@@ -18,9 +18,7 @@
 
 + (AppDelegate *)globalDelegate;
 
-- (void)saveContext;
-- (NSURL *)applicationDocumentsDirectory;
-
+- (void)toggleDrawLeft;
 
 @end
 

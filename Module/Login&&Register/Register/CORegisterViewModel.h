@@ -20,6 +20,8 @@
 
 @property (nonatomic, strong) NSData *headImageData;
 
+@property (nonatomic, strong) NSString *headImageUrl;
+
 @property (nonatomic, strong) NSNumber *invalidStart;
 
 @property (nonatomic, strong) NSNumber *invalidNext;

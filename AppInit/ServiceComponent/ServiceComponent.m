@@ -7,8 +7,7 @@
 //
 
 #import "ServiceComponent.h"
-#import "BaiduMapServer.h"
-#import "UIInitServer.h"
+
 
 @interface ServiceComponent()
 {

@@ -8,11 +8,14 @@
 
 #import "COMediator+COBikeMainComponet.h"
 
+#define Main_Target @"COBikeMainComponet"
+#define Main_Action @"BikeMainViewController"
+
 @implementation COMediator (COBikeMainComponet)
 
 - (UIViewController *)COBikeComponet_ViewController
 {
-    UIViewController *viewController = [self performTarget:@"COBikeMainComponet" action:@"BikeMainViewController" params:nil];
+    UIViewController *viewController = [self performTarget:Main_Target action:Main_Action params:nil];
     if([viewController isKindOfClass:[UIViewController class]])
     {
         return viewController;

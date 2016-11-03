@@ -191,19 +191,21 @@
             //获取图片裁剪后，剩下的图
             UIImage* crop = [info objectForKey:UIImagePickerControllerCropRect];
             
-            image = original;
+            image = edit;
         }
         else
         {
-            image = [info objectForKey:UIImagePickerControllerOriginalImage];
+            image = [info objectForKey:UIImagePickerControllerEditedImage];
         }
+        
+        UIImage *smallImage = [UIImage imageWithImage:image ScaleSize:CGSizeMake(100, 100)];
         
         WEAK_SELF(weakself)
         
         [picker dismissViewControllerAnimated:YES completion:^{
             
-            weakself.registerViewModel.headImageData = UIImagePNGRepresentation(image);
-            [weakself.endView setHeadImage:image];
+            weakself.registerViewModel.headImageData = UIImagePNGRepresentation(smallImage);
+            [weakself.endView setHeadImage:smallImage];
         }];
     }
     

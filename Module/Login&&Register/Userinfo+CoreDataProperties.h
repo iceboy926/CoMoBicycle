@@ -18,6 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nullable, nonatomic, retain) NSString *usename;
 @property (nullable, nonatomic, retain) NSString *nickname;
 @property (nullable, nonatomic, retain) NSData *headimage;
+@property (nullable, nonatomic, retain)NSString *headimageurl;
 
 @end
 

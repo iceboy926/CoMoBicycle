@@ -10,6 +10,10 @@
 
 @interface COBMHeaderView : UIView
 
+@property (nonatomic, copy) void (^leftbtnClickBlock)();
+
 - (instancetype)initWithTitle:(NSString *)title;
+
+- (instancetype)initWithTitle:(NSString *)title HeaderImage:(NSData *)headData;
 
 @end
