@@ -58,6 +58,7 @@
 {
     [self registService:[[UIInitServer alloc] init]];
     [self registService:[[BaiduMapServer alloc] init]];
+    [self registService:[[NetWorkServer alloc] init]];
 }
 
 @end

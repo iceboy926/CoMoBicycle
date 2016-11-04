@@ -8,11 +8,15 @@
 
 #import "COUserSettingViewController.h"
 #import "COUserSettingHeaderView.h"
+#import "COUserSettingFooterView.h"
+#import "COUserSettingTableViewModel.h"
 
 @interface COUserSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) COUserSettingHeaderView *settingHeaderView;
 @property (nonatomic, strong) UITableView *settingTableView;
+@property (nonatomic, strong) COUserSettingFooterView *settingFooterView;
+@property (nonatomic, strong) COUserSettingTableViewModel *settingViewModel;
 
 @end
 
@@ -24,7 +28,17 @@
     
     [self.view addSubview:self.settingHeaderView];
     [self.view addSubview:self.settingTableView];
+    [self.view addSubview:self.settingFooterView];
+
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    [self addUIConstraints];
+}
+
 
 #pragma mark ui layout
 
@@ -33,14 +47,22 @@
     [self.settingHeaderView mas_makeConstraints:^(MASConstraintMaker *make) {
        
         make.left.top.right.equalTo(self.view);
-        make.height.mas_equalTo(NavBarHeight*2);
+        make.height.equalTo(self.view.mas_height).multipliedBy(0.3);
         
     }];
     
     [self.settingTableView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.right.bottom.equalTo(self.view);
+        make.left.right.equalTo(self.view);
         make.top.equalTo(_settingHeaderView.mas_bottom);
+        make.bottom.equalTo(_settingFooterView.mas_top);
+    }];
+    
+    [self.settingFooterView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.left.right.bottom.equalTo(self.view);
+        make.height.equalTo(self.view.mas_height).multipliedBy(0.2);
+        
     }];
 }
 
@@ -65,11 +87,30 @@
         _settingTableView.delegate = self;
         _settingTableView.dataSource = self;
         _settingTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        //_settingTableView.tableHeaderView = self.settingHeaderView;
-        
+        _settingTableView.backgroundColor = shadowViewColor;
     }
     
     return _settingTableView;
+}
+
+- (COUserSettingFooterView *)settingFooterView
+{
+    if(_settingFooterView == nil)
+    {
+        _settingFooterView = [[COUserSettingFooterView alloc] init];
+    }
+    
+    return _settingFooterView;
+}
+
+- (COUserSettingTableViewModel *)settingViewModel
+{
+    if(_settingViewModel == nil)
+    {
+        _settingViewModel = [[COUserSettingTableViewModel alloc] init];
+    }
+    
+    return _settingViewModel;
 }
 
 
@@ -77,23 +118,23 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 4;
+    return [self.settingViewModel numberOfRowsInSection:section];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *strcell = @"usercell";
-    
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:strcell forIndexPath:indexPath];
-    if(cell == nil)
-    {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:strcell];
-    }
-    
-    return cell;
+    return [self.settingViewModel tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return [self.settingViewModel tableView:tableView heightForRowAtIndexPath:indexPath];
+}
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+}
 
 
 @end

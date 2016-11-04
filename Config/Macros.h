@@ -11,8 +11,7 @@
 
 #define MAX_WIDTH  [UIScreen mainScreen].bounds.size.width
 #define MAX_HEIGHT [UIScreen mainScreen].bounds.size.height
-#define WIDTH_TO_FIT(width)  (ceilf( [UIScreen mainScreen].bounds.size.width / 375.0f  * (width / 2) * 2) \
-/ 2.0f)
+#define WIDTH_TO_FIT(_width)  (ceilf( [UIScreen mainScreen].bounds.size.width / 414.0f  * (_width / 2) * 2))
 
 #define WEAK_SELF(weakSelf) __weak __typeof(&*self)weakSelf = self;
 #define STRONG_SELF(strongSelf) __strong __typeof(&*self)strongSelf = self;
@@ -41,7 +40,7 @@
 
 #pragma mark font
 
-
+#pragma mark imageURL
 
 
 #endif /* Macros_h */

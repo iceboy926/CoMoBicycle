@@ -30,5 +30,6 @@
 #import "httpRequest.h"
 #import "CoreDataManager.h"
 #import "UIImage+resize.h"
+#import "Reachability.h"
 
 #endif /* PreHeader_pch */

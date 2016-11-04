@@ -67,8 +67,11 @@
 {
     [self.leftSliderBtn mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.top.bottom.equalTo(self).insets(UIEdgeInsetsMake(20, 0, 0, 0));
-        make.width.mas_equalTo(44);
+        make.left.equalTo(self.mas_left).offset(10);
+        make.top.equalTo(self.mas_top).offset(20);
+        //make.left.top.bottom.equalTo(self).insets(UIEdgeInsetsMake(20, 10, 0, 0));
+        make.width.mas_equalTo(40);
+        make.height.mas_equalTo(40);
         
     }];
     

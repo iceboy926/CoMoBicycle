@@ -12,4 +12,14 @@
 
 -(NSString *)md5;
 
++(NSString*)replaceUnicode:(NSString *)unicodeStr;
+
++(NSDate *)dateFromString:(NSString *)string;
+
+-(NSString *)URLEncodeString;
+
+-(NSString *)URLDecodeString;
+
+-(NSMutableString*)GetTime;
+
 @end
