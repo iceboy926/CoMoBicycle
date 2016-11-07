@@ -42,5 +42,9 @@
 
 #pragma mark imageURL
 
+#pragma mark key
+
+#define BAIDUMAP_SK @"X6fWRYC69DdhfrYc9Y3Qw1uIGyxwLuHn"
+
 
 #endif /* Macros_h */

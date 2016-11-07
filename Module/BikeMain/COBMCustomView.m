@@ -25,4 +25,9 @@
     return self;
 }
 
+- (void)addUIConstraints
+{
+    
+}
+
 @end

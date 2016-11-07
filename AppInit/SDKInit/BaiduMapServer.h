@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface BaiduMapServer : NSObject <UIApplicationDelegate>
+@interface BaiduMapServer : NSObject <UIApplicationDelegate, BMKGeneralDelegate>
 
 @end

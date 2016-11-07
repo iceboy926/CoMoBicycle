@@ -8,13 +8,54 @@
 
 #import "BaiduMapServer.h"
 
+@interface BaiduMapServer()
+
+@property (nonatomic, strong) BMKMapManager *bmmanager;
+
+@end
+
 @implementation BaiduMapServer
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    //init 
+    self.bmmanager = [[BMKMapManager alloc] init];
+    
+    [self.bmmanager start:BAIDUMAP_SK generalDelegate:self];
     
     return YES;
+}
+
+
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+    [BMKMapView willBackGround];
+}
+
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+    
+    [BMKMapView didForeGround];
+}
+
+
+#pragma mark BMKGenenral Delegate
+
+/**
+ *返回网络错误
+ *@param iError 错误号
+ */
+- (void)onGetNetworkState:(int)iError
+{
+    
+}
+
+/**
+ *返回授权验证错误
+ *@param iError 错误号 : 为0时验证通过，具体参加BMKPermissionCheckResultCode
+ */
+- (void)onGetPermissionState:(int)iError
+{
+    NSLog(@"Get Permission state is %d", iError);
 }
 
 
