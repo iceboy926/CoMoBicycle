@@ -135,6 +135,11 @@
         mapPoints[idx] = locationPoint;
     }];
     
+    if(polyLine)
+    {
+        [self.mapView removeOverlay:polyLine];
+    }
+    
     polyLine = [BMKPolyline polylineWithPoints:mapPoints count:pointCount];
     
     if(polyLine)
