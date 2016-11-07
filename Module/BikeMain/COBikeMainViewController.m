@@ -29,13 +29,11 @@
 
     [self.view addSubview:self.headView];
     [self.view addSubview:self.customView];
-    
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
     [self addUIConstraints];
 }
 

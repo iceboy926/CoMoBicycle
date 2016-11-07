@@ -8,7 +8,7 @@
 
 #import "BaiduMapServer.h"
 
-@interface BaiduMapServer()
+@interface BaiduMapServer() <BMKGeneralDelegate>
 
 @property (nonatomic, strong) BMKMapManager *bmmanager;
 
@@ -46,7 +46,14 @@
  */
 - (void)onGetNetworkState:(int)iError
 {
-    
+    if(iError == 0)
+    {
+        NSLog(@"connect network ok");
+    }
+    else
+    {
+        NSLog(@"Ge network state: %d", iError);
+    }
 }
 
 /**

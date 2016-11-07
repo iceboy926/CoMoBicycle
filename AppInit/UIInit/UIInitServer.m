@@ -48,7 +48,7 @@
         
     
         [self.drawerController setMaximumLeftDrawerWidth:WIDTH_TO_FIT(200)];
-        [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeAll];
+        [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
         [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
         
         rootVC = self.drawerController;
