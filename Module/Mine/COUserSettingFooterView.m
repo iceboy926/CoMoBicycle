@@ -10,6 +10,7 @@
 
 @interface COUserSettingFooterView()
 
+@property (nonatomic, strong) UIImageView *imageView;
 
 @end
 
@@ -20,10 +21,39 @@
     self = [super init];
     if(self)
     {
-        self.backgroundColor = shadowViewColor;
+        self.backgroundColor = backGroundColor;
+        
+        [self addSubview:self.imageView];
+        
+        [self addUIConstraints];
     }
     
     return self;
+}
+
+#pragma mark ui layout
+
+- (void)addUIConstraints
+{
+    [self.imageView mas_makeConstraints:^(MASConstraintMaker *make) {
+        
+        make.edges.equalTo(self);
+        
+    }];
+}
+
+#pragma mark lazy load
+
+- (UIImageView *)imageView
+{
+    if(_imageView == nil)
+    {
+        _imageView = [[UIImageView alloc] init];
+        
+        _imageView.image = [[UIImage imageNamed:@"placeholder_60x60"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+    }
+    
+    return _imageView;
 }
 
 @end

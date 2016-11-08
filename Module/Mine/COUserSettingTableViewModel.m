@@ -51,7 +51,7 @@
             
             if(response)
             {
-                NSArray *arrayResult = response;
+                NSArray *arrayResult = response[@"centerSetting"];
                 for (NSDictionary *dic in arrayResult) {
                 
                     COUserSettingCellModel *cellModel = [[COUserSettingCellModel alloc] initWithDictionary:dic];

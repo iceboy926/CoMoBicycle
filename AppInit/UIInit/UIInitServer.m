@@ -47,7 +47,7 @@
         self.drawerController.leftDrawerViewController = [[COMediator shareInstance] COUserSettingComponet_ViewController];
         
     
-        [self.drawerController setMaximumLeftDrawerWidth:WIDTH_TO_FIT(200)];
+        [self.drawerController setMaximumLeftDrawerWidth:WIDTH_TO_FIT(250)];
         [self.drawerController setOpenDrawerGestureModeMask:MMOpenDrawerGestureModeNone];
         [self.drawerController setCloseDrawerGestureModeMask:MMCloseDrawerGestureModeAll];
         

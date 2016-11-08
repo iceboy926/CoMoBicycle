@@ -7,6 +7,7 @@
 //
 
 #import "COUserSettingHeaderView.h"
+#import "COUserSettingHeadModel.h"
 
 @interface COUserSettingHeaderView()
 
@@ -40,18 +41,31 @@
 
 - (void)addUIConstriants
 {
+    NSInteger leftPadding = 10;
+    NSInteger ImageSize = 60;
+    
     [self.headImage mas_makeConstraints:^(MASConstraintMaker *make) {
         
+        make.centerY.equalTo(self.mas_centerY);
+        make.left.equalTo(self.mas_left).offset(leftPadding);
+        make.width.height.mas_equalTo(ImageSize);
         
     }];
     
     [self.titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        
+        make.left.equalTo(_headImage.mas_right).offset(10);
+        make.top.equalTo(_headImage.mas_top).offset(10);
+        make.right.equalTo(self.mas_right);
+        make.height.mas_equalTo(30);
     }];
     
     [self.descriptLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         
+        make.left.equalTo(_headImage.mas_left);
+        make.right.equalTo(_titleLabel.mas_right);
+        make.top.equalTo(_headImage.mas_bottom).offset(5);
+        make.bottom.equalTo(self.mas_bottom);
         
     }];
 }
@@ -63,6 +77,10 @@
     if(_headImage == nil)
     {
         _headImage = [[UIImageView alloc] init];
+        _headImage.layer.borderColor = [UIColor whiteColor].CGColor;
+        _headImage.layer.borderWidth = 1.0;
+        _headImage.layer.masksToBounds = YES;
+        _headImage.layer.cornerRadius = 30;
         
     }
     return _headImage;
@@ -74,10 +92,8 @@
     {
         _titleLabel = [[UILabel alloc] init];
         
-        _titleLabel.text = @"";
         _titleLabel.textColor = [UIColor whiteColor];
-        _titleLabel.font = [UIFont systemFontOfSize:18.0];
-        _titleLabel.backgroundColor = [UIColor whiteColor];
+        _titleLabel.font = [UIFont systemFontOfSize:16.0];
         
     }
     
@@ -90,12 +106,27 @@
     {
         _descriptLabel = [[UILabel alloc] init];
         _descriptLabel.textColor = [UIColor whiteColor];
-        _descriptLabel.text = @"";
-        _descriptLabel.font = [UIFont systemFontOfSize:16.0];
+        _descriptLabel.font = [UIFont systemFontOfSize:13.0];
         _descriptLabel.numberOfLines = 0;
     }
     
     return _descriptLabel;
+}
+
+
+#pragma mark member function
+
+- (void)setHeadModel:(COUserSettingHeadModel *)headModel
+{
+    _headModel = headModel;
+    
+    NSURL *imageUrl = [NSURL URLWithString:headModel.headImageUrl];
+    [_headImage sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"placeholder_60x60"]];
+    
+    _titleLabel.text = headModel.titleStr;
+    
+    _descriptLabel.text = headModel.descriptionStr;
+    
 }
 
 @end

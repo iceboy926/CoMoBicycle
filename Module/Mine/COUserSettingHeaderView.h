@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class COUserSettingHeadModel;
+
 @interface COUserSettingHeaderView : UIView
+
+@property (nonatomic, strong)COUserSettingHeadModel *headModel;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "COBMCustomView.h"
+#import "COSearchView.h"
 
 #define MIN_DISTANCE  5.0
 
@@ -16,10 +17,12 @@
     BMKPolyline *polyLine;
 }
 
+@property (nonatomic, strong)COSearchView *searchView;
 @property (nonatomic, strong)BMKMapView *mapView;
 @property (nonatomic, strong)BMKLocationService *locationService;
 @property (nonatomic, strong)CLLocationManager *locationManager;
 @property (nonatomic, strong)NSMutableArray *locationPointArray; //记录用户经过的点
+
 
 @end
 
@@ -32,8 +35,10 @@
     {
         self.backgroundColor = backGroundColor;
         [self addSubview:self.mapView];
+        [self addSubview:self.searchView];
         [self addUIConstraints];
         [self startlocationService];
+        [self addTapGesture];
     }
     
     return self;
@@ -48,6 +53,24 @@
         make.left.right.top.bottom.equalTo(self);
         
     }];
+    
+    [self.searchView mas_makeConstraints:^(MASConstraintMaker *make) {
+       
+        make.left.bottom.right.equalTo(self).insets(UIEdgeInsetsMake(0, 20, 10, 20));
+        make.height.mas_equalTo(50);
+    }];
+}
+
+- (void)addTapGesture
+{
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewAction:)];
+    
+    [self addGestureRecognizer:tapGesture];
+}
+
+- (void)touchViewAction:(UITapGestureRecognizer *)gesture
+{
+    [self.searchView.inputSearch resignFirstResponder];
 }
 
 #pragma mark init service
@@ -64,6 +87,17 @@
 }
 
 #pragma mark lazy load
+
+- (COSearchView *)searchView
+{
+    if(_searchView == nil)
+    {
+        _searchView = [[COSearchView alloc] init];
+        
+    }
+    
+    return _searchView;
+}
 
 - (BMKMapView *)mapView
 {

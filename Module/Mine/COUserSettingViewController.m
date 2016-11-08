@@ -10,13 +10,17 @@
 #import "COUserSettingHeaderView.h"
 #import "COUserSettingFooterView.h"
 #import "COUserSettingTableViewModel.h"
+#import "COUserSettingHeadViewModel.h"
+#import "COUserSettingHeadModel.h"
 
 @interface COUserSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) COUserSettingHeaderView *settingHeaderView;
 @property (nonatomic, strong) UITableView *settingTableView;
 @property (nonatomic, strong) COUserSettingFooterView *settingFooterView;
+
 @property (nonatomic, strong) COUserSettingTableViewModel *settingViewModel;
+@property (nonatomic, strong) COUserSettingHeadViewModel *headViewModel;
 
 @end
 
@@ -37,6 +41,13 @@
     [super viewWillAppear:animated];
     
     [self addUIConstraints];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [self requestData];
 }
 
 
@@ -111,6 +122,32 @@
     }
     
     return _settingViewModel;
+}
+
+- (COUserSettingHeadViewModel *)headViewModel
+{
+    if(_headViewModel == nil)
+    {
+        _headViewModel = [[COUserSettingHeadViewModel alloc] init];
+        
+    }
+    
+    return _headViewModel;
+}
+
+
+#pragma mark custom function
+
+- (void)requestData
+{
+    WEAK_SELF(weakself)
+    [self.headViewModel fetchUserSettingHeadDataWithCallBack:^(id response) {
+       
+        COUserSettingHeadModel *headModel = [[COUserSettingHeadModel alloc] initWithDictionary:response];
+        
+        [weakself.settingHeaderView setHeadModel:headModel];
+        
+    }];
 }
 
 
