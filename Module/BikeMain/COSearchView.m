@@ -88,16 +88,31 @@
 
 #pragma mark UISearchBar delegate
 
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar
+{
+    if(self.inputSearchKeywordBlock)
+    {
+        self.inputSearchKeywordBlock();
+    }
+
+}
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {
-    NSLog(@"search bar input");
-}
+    NSLog(@"search bar input is %@", searchText);
+    
+    [self.inputSearch resignFirstResponder];
+    
+ }
 
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar
 {
-    NSLog(@"search result");
-    
-    [self.inputSearch resignFirstResponder];
+    NSLog(@"search key word is %@", searchBar.text);
+
 }
+
+#pragma mark custom function
+
+
 
 @end

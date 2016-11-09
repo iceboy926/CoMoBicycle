@@ -10,4 +10,8 @@
 
 @interface COBMCustomView : UIView
 
+@property (nonatomic, copy) void (^startSearchBlock)();
+
+- (void)startPoiSearchWithKeyword:(NSString *)strKeyWord;
+
 @end

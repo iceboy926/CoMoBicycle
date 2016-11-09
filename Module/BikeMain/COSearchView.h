@@ -12,4 +12,6 @@
 
 @property (nonatomic, strong)UISearchBar *inputSearch;
 
+@property (nonatomic, copy) void (^inputSearchKeywordBlock)();
+
 @end

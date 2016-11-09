@@ -8,10 +8,12 @@
 
 #import "COBMCustomView.h"
 #import "COSearchView.h"
+#import "COResultInfo.h"
+#import "COResultListView.h"
 
 #define MIN_DISTANCE  5.0
 
-@interface COBMCustomView() <BMKLocationServiceDelegate, BMKMapViewDelegate>
+@interface COBMCustomView() <BMKLocationServiceDelegate, BMKMapViewDelegate, BMKPoiSearchDelegate>
 {
     CLLocation *preLocation;
     BMKPolyline *polyLine;
@@ -23,6 +25,7 @@
 @property (nonatomic, strong)CLLocationManager *locationManager;
 @property (nonatomic, strong)NSMutableArray *locationPointArray; //记录用户经过的点
 
+@property (nonatomic, strong)BMKPoiSearch *poiSearch; //poi 搜索
 
 @end
 
@@ -94,6 +97,14 @@
     {
         _searchView = [[COSearchView alloc] init];
         
+        WEAK_SELF(weakself)
+        _searchView.inputSearchKeywordBlock = ^{
+        
+            if(weakself.startSearchBlock)
+            {
+                weakself.startSearchBlock();
+            }
+        };
     }
     
     return _searchView;
@@ -113,7 +124,7 @@
         
         [_mapView setZoomEnabled:YES];
         
-        _mapView.zoomLevel = 15;
+        _mapView.zoomLevel = 13;
     }
     
     return _mapView;
@@ -153,8 +164,30 @@
     return _locationPointArray;
 }
 
-
 #pragma mark custom function
+
+- (void)startPoiSearchWithKeyword:(NSString *)strKeyWord
+{
+    _poiSearch = [[BMKPoiSearch alloc] init];
+    
+    _poiSearch.delegate = self;
+    
+    BMKCitySearchOption *searchOption = [[BMKCitySearchOption alloc] init];
+    
+    searchOption.city = @"南京市";
+    searchOption.keyword = strKeyWord;
+    
+    BOOL blflag = [_poiSearch poiSearchInCity:searchOption];
+    if(blflag)
+    {
+        [self.locationService stopUserLocationService];
+    }
+    else
+    {
+        
+    }
+}
+
 
 - (void)drawUserRoutes
 {
@@ -237,6 +270,17 @@
 #pragma mark BMKViewDelegate
 
 /**
+ *当选中一个annotation views时，调用此接口
+ *@param mapView 地图View
+ *@param views 选中的annotation views
+ */
+- (void)mapView:(BMKMapView *)mapView didSelectAnnotationView:(BMKAnnotationView *)view
+{
+    [mapView bringSubviewToFront:view];
+    [mapView setNeedsDisplay];
+}
+
+/**
  *根据overlay生成对应的View
  *@param mapView 地图View
  *@param overlay 指定的overlay
@@ -257,6 +301,95 @@
     {
         return nil;
     }
+}
+
+/**
+ *根据anntation生成对应的View
+ *@param mapView 地图View
+ *@param annotation 指定的标注
+ *@return 生成的标注View
+ */
+- (BMKAnnotationView *)mapView:(BMKMapView *)mapView viewForAnnotation:(id <BMKAnnotation>)annotation
+{
+    static NSString *annotationViewStr = @"keywordMark";
+    
+    BMKPinAnnotationView *annotationView = (BMKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:annotationViewStr];
+    
+    if(annotationView == nil)
+    {
+        annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationViewStr];
+        annotationView.pinColor = BMKPinAnnotationColorGreen;
+        annotationView.animatesDrop = YES;
+    }
+    
+    annotationView.centerOffset = CGPointMake(0, -(annotationView.frame.size.height * 0.5));
+    annotationView.annotation = annotation;
+    annotationView.canShowCallout = YES;
+    annotationView.draggable = YES;
+    
+    return annotationView;
+}
+
+#pragma mark poisearch delegate
+
+/**
+ *返回POI搜索结果
+ *@param searcher 搜索对象
+ *@param poiResult 搜索结果列表
+ *@param errorCode 错误号，@see BMKSearchErrorCode
+ */
+- (void)onGetPoiResult:(BMKPoiSearch*)searcher result:(BMKPoiResult*)poiResult errorCode:(BMKSearchErrorCode)errorCode
+{
+    if(errorCode == BMK_SEARCH_NO_ERROR)
+    {
+        
+        NSArray *array = [NSArray arrayWithArray:[self.mapView annotations]];
+        [self.mapView removeAnnotations:array];
+        
+        NSLog(@"BMKPOI Result is %@", poiResult.poiInfoList);
+        
+        NSMutableArray *annotationArray = [NSMutableArray array];
+        NSMutableArray *resultInfoArray = [NSMutableArray array];
+        
+        for (BMKPoiInfo *poiInfo in poiResult.poiInfoList) {
+            
+            BMKPointAnnotation *pointAnnotation = [[BMKPointAnnotation alloc] init];
+            pointAnnotation.title = poiInfo.name;
+            pointAnnotation.coordinate = poiInfo.pt;
+            [annotationArray addObject:pointAnnotation];
+            
+            COResultInfo *resultInfo = [[COResultInfo alloc] init];
+            resultInfo.name = poiInfo.name;
+            resultInfo.detail = poiInfo.address;
+            resultInfo.uid = poiInfo.uid;
+            [resultInfoArray addObject:resultInfo];
+        }
+        
+        [self.mapView addAnnotations:annotationArray];
+        [self.mapView showAnnotations:annotationArray animated:YES];
+        
+        [self showSearchResultListView:resultInfoArray];
+    }
+}
+
+/**
+ *返回POI详情搜索结果
+ *@param searcher 搜索对象
+ *@param poiDetailResult 详情搜索结果
+ *@param errorCode 错误号，@see BMKSearchErrorCode
+ */
+- (void)onGetPoiDetailResult:(BMKPoiSearch*)searcher result:(BMKPoiDetailResult*)poiDetailResult errorCode:(BMKSearchErrorCode)errorCode
+{
+   
+}
+
+#pragma mark show ResultList
+
+- (void)showSearchResultListView:(NSArray *)arrayInfo
+{
+    
+    [COResultListView showViewWithArray:arrayInfo];
+
 }
 
 
