@@ -12,6 +12,6 @@
 
 - (instancetype)initWithArrayData:(NSArray *)resultData;
 
-+(void)showViewWithArray:(NSArray *)resultinfoArray;
+- (void)showView;
 
 @end

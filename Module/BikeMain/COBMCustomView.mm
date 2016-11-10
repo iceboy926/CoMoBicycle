@@ -387,9 +387,9 @@
 
 - (void)showSearchResultListView:(NSArray *)arrayInfo
 {
+    COResultListView *listView = [[COResultListView alloc] initWithArrayData:arrayInfo];
     
-    [COResultListView showViewWithArray:arrayInfo];
-
+    [listView showView];
 }
 
 

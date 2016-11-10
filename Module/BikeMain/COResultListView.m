@@ -16,8 +16,10 @@
 }
 
 
-@property (nonatomic, strong) UILabel *titleLable;
+@property (nonatomic, strong) UIToolbar *toolBar;
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UILabel *titleLable;
+@property (nonatomic, strong) UIBarButtonItem *closeBarBtnItem;
 
 
 @end
@@ -36,11 +38,10 @@ COResultListView *resultListView =nil;
         self.backgroundColor = backGroundColor;
         resultArray = [resultData mutableCopy];
         
-        [self addSubview:self.titleLable];
+        [self addSubview:self.toolBar];
         [self addSubview:self.collectionView];
         [self addUIConstraints];
         
-        [[UIApplication sharedApplication].keyWindow addSubview:self];
     }
     
     return self;
@@ -50,28 +51,47 @@ COResultListView *resultListView =nil;
 
 - (void)addUIConstraints
 {
-    [self.titleLable mas_makeConstraints:^(MASConstraintMaker *make) {
+    [self.toolBar mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.top.right.equalTo(self);
-        make.height.mas_equalTo(30);
+        make.height.mas_equalTo(44);
     }];
     
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
         
         make.left.right.bottom.equalTo(self);
-        make.top.equalTo(_titleLable.mas_bottom);
+        make.top.equalTo(_toolBar.mas_bottom);
         
     }];
 }
 
 #pragma mark lazy load
 
+- (UIToolbar *)toolBar
+{
+    if(_toolBar == nil)
+    {
+        _toolBar = [[UIToolbar alloc] init];
+        
+        [_toolBar sizeToFit];
+        
+        UIBarButtonItem *titleBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleLable];
+        UIBarButtonItem *closeBarItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(closeBarBtnClicked:)];
+        
+        [_toolBar setItems:[NSArray arrayWithObjects:titleBarItem,closeBarItem, nil] animated:YES];
+        
+    }
+    
+    return _toolBar;
+}
+
 - (UILabel *)titleLable
 {
     if(_titleLable == nil)
     {
-        _titleLable = [[UILabel alloc] init];
-        
+        _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, MAX_WIDTH - 44, 44)];
+    
+        _titleLable.text = @"共搜索到 个结果";
         _titleLable.textColor = [UIColor blackColor];
         _titleLable.font = [UIFont systemFontOfSize:14.0];
         _titleLable.textAlignment = NSTextAlignmentCenter;
@@ -94,7 +114,7 @@ COResultListView *resultListView =nil;
         _collectionView.backgroundColor = [UIColor clearColor];
         
         strReuser = @"CollectionViewCell";
-        [_collectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:strReuser];
+        [_collectionView registerClass:[COCollectionViewCell class] forCellWithReuseIdentifier:strReuser];
         
     }
     
@@ -130,22 +150,41 @@ COResultListView *resultListView =nil;
     return CGSizeMake(MAX_WIDTH, (MAX_HEIGHT/2.5)/3);
 }
 
+#pragma mark barbutton- action
+
+- (void)closeBarBtnClicked:(UIBarButtonItem *)item
+{
+    [self hideView];
+}
 
 #pragma mark member function
 
-+(void)showViewWithArray:(NSArray *)resultinfoArray;
+-(void)showView
 {
-    resultListView = [[COResultListView alloc] initWithArrayData:resultinfoArray];
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.frame = CGRectMake(0, MAX_HEIGHT - (MAX_HEIGHT/2.5), MAX_WIDTH, (MAX_HEIGHT/2.5));
     
-    [UIView animateWithDuration:0.3 animations:^{
-    
-        resultListView.frame = CGRectMake(0, MAX_HEIGHT - MAX_HEIGHT/2.5, MAX_WIDTH, MAX_HEIGHT/2.5);
+    } completion:^(BOOL blfinished){
         
-    }completion:^(BOOL finished) {
-        
-        
+        [[UIApplication sharedApplication].keyWindow addSubview:self];
+        [[UIApplication sharedApplication].keyWindow bringSubviewToFront:self];
     }];
 }
+
+
+- (void)hideView
+{
+    [UIView animateWithDuration:0.5 animations:^{
+        
+        self.frame = CGRectMake(0, MAX_HEIGHT, MAX_WIDTH, (MAX_HEIGHT/2.5));
+    
+    } completion:^(BOOL blfinished){
+    
+        [self removeFromSuperview];
+    }];
+}
+
 
 
 @end
