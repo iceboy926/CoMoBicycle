@@ -17,6 +17,9 @@
 {
     CLLocation *preLocation;
     BMKPolyline *polyLine;
+    NSMutableArray *resultInfoArray;
+    NSString *strkeyword;
+    UITapGestureRecognizer *tapGesture;
 }
 
 @property (nonatomic, strong)COSearchView *searchView;
@@ -26,6 +29,7 @@
 @property (nonatomic, strong)NSMutableArray *locationPointArray; //记录用户经过的点
 
 @property (nonatomic, strong)BMKPoiSearch *poiSearch; //poi 搜索
+
 
 @end
 
@@ -66,7 +70,7 @@
 
 - (void)addTapGesture
 {
-    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewAction:)];
+    tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchViewAction:)];
     
     [self addGestureRecognizer:tapGesture];
 }
@@ -168,6 +172,9 @@
 
 - (void)startPoiSearchWithKeyword:(NSString *)strKeyWord
 {
+    
+    [self removeGestureRecognizer:tapGesture];
+    
     _poiSearch = [[BMKPoiSearch alloc] init];
     
     _poiSearch.delegate = self;
@@ -176,6 +183,8 @@
     
     searchOption.city = @"南京市";
     searchOption.keyword = strKeyWord;
+    
+    strkeyword = strKeyWord;
     
     BOOL blflag = [_poiSearch poiSearchInCity:searchOption];
     if(blflag)
@@ -269,6 +278,18 @@
 
 #pragma mark BMKViewDelegate
 
+
+/**
+ *点中底图标注后会回调此接口
+ *@param mapview 地图View
+ *@param mapPoi 标注点信息
+ */
+- (void)mapView:(BMKMapView *)mapView onClickedMapPoi:(BMKMapPoi*)mapPoi
+{
+    NSLog(@"on clicked map poi");
+}
+
+
 /**
  *当选中一个annotation views时，调用此接口
  *@param mapView 地图View
@@ -278,6 +299,10 @@
 {
     [mapView bringSubviewToFront:view];
     [mapView setNeedsDisplay];
+    
+    NSLog(@"did select annotionView");
+    
+    [self showDetailInfoWithAnnotion:view.annotation];
 }
 
 /**
@@ -318,7 +343,7 @@
     if(annotationView == nil)
     {
         annotationView = [[BMKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:annotationViewStr];
-        annotationView.pinColor = BMKPinAnnotationColorGreen;
+        annotationView.pinColor = BMKPinAnnotationColorRed;
         annotationView.animatesDrop = YES;
     }
     
@@ -349,7 +374,9 @@
         NSLog(@"BMKPOI Result is %@", poiResult.poiInfoList);
         
         NSMutableArray *annotationArray = [NSMutableArray array];
-        NSMutableArray *resultInfoArray = [NSMutableArray array];
+        
+        if(resultInfoArray == nil)
+            resultInfoArray = [NSMutableArray array];
         
         for (BMKPoiInfo *poiInfo in poiResult.poiInfoList) {
             
@@ -368,7 +395,11 @@
         [self.mapView addAnnotations:annotationArray];
         [self.mapView showAnnotations:annotationArray animated:YES];
         
-        [self showSearchResultListView:resultInfoArray];
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            
+            [self showSearchResultListView];
+        });
+        
     }
 }
 
@@ -380,16 +411,65 @@
  */
 - (void)onGetPoiDetailResult:(BMKPoiSearch*)searcher result:(BMKPoiDetailResult*)poiDetailResult errorCode:(BMKSearchErrorCode)errorCode
 {
-   
+    if(errorCode == BMK_SEARCH_NO_ERROR)
+    {
+        NSString *strName = poiDetailResult.name;
+        NSString *strUrl = poiDetailResult.detailUrl;
+        
+        NSLog(@"result name is %@ url is %@", strName, strUrl);
+        
+        
+    }
 }
 
 #pragma mark show ResultList
 
-- (void)showSearchResultListView:(NSArray *)arrayInfo
+- (void)showSearchResultListView
 {
-    COResultListView *listView = [[COResultListView alloc] initWithArrayData:arrayInfo];
+    COResultListView *listView = [[COResultListView alloc] initWithKeyWord:strkeyword InfoData:resultInfoArray];
     
     [listView showView];
+    
+    WEAK_SELF(weakself)
+    listView.DidSelectResultInfoBlock = ^(NSInteger index){
+    
+        NSMutableArray *annotionArray = [NSMutableArray arrayWithArray:[weakself.mapView annotations]];
+        
+        BMKPointAnnotation *pointAnnotation = [annotionArray objectAtIndex:index];
+        
+        [weakself.mapView selectAnnotation:pointAnnotation animated:YES];
+        
+        CLLocationCoordinate2D location2D = pointAnnotation.coordinate;
+        
+        [weakself.mapView setCenterCoordinate:location2D animated:YES];
+        
+        [weakself.mapView zoomIn];
+    };
+}
+
+
+- (void)showDetailInfoWithAnnotion:(BMKPointAnnotation *)pointAnnotation
+{
+    if([pointAnnotation conformsToProtocol:@protocol(BMKAnnotation)])
+    {
+        NSInteger index = [[self.mapView annotations] indexOfObject:pointAnnotation];
+        
+        BMKPoiDetailSearchOption *detailSearchOption = [[BMKPoiDetailSearchOption alloc] init];
+        
+        COResultInfo *resultInfo = [resultInfoArray objectAtIndex:index];
+        
+        detailSearchOption.poiUid = resultInfo.uid;
+        
+        BOOL blFlag = [self.poiSearch poiDetailSearch:detailSearchOption];
+        if(blFlag)
+        {
+            
+        }
+        else
+        {
+            
+        }
+    }
 }
 
 

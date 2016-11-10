@@ -13,6 +13,7 @@
 {
     NSString *strReuser;
     NSArray *resultArray;
+    NSString *strKeyWord;
 }
 
 
@@ -24,19 +25,19 @@
 
 @end
 
-COResultListView *resultListView =nil;
 
 
 @implementation COResultListView
 
 
-- (instancetype)initWithArrayData:(NSArray *)resultData
+- (instancetype)initWithKeyWord:(NSString *)strKeyword InfoData:(NSArray *)resultData
 {
     self = [super init];
     if(self)
     {
         self.backgroundColor = backGroundColor;
         resultArray = [resultData mutableCopy];
+        strKeyWord = [NSString stringWithString:strKeyword];
         
         [self addSubview:self.toolBar];
         [self addSubview:self.collectionView];
@@ -76,7 +77,9 @@ COResultListView *resultListView =nil;
         [_toolBar sizeToFit];
         
         UIBarButtonItem *titleBarItem = [[UIBarButtonItem alloc] initWithCustomView:self.titleLable];
-        UIBarButtonItem *closeBarItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(closeBarBtnClicked:)];
+        UIBarButtonItem *closeBarItem = [[UIBarButtonItem alloc] initWithTitle:@"关闭" style:UIBarButtonItemStylePlain target:self action:@selector(closeBarBtnClicked:)];
+        
+        [closeBarItem setTitleTextAttributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14.0], NSForegroundColorAttributeName: [UIColor blackColor]} forState:UIControlStateNormal];
         
         [_toolBar setItems:[NSArray arrayWithObjects:titleBarItem,closeBarItem, nil] animated:YES];
         
@@ -89,12 +92,18 @@ COResultListView *resultListView =nil;
 {
     if(_titleLable == nil)
     {
-        _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, MAX_WIDTH - 44, 44)];
+        NSInteger offset = 60;
+        _titleLable = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, MAX_WIDTH-offset, 44)];
     
-        _titleLable.text = @"共搜索到 个结果";
-        _titleLable.textColor = [UIColor blackColor];
-        _titleLable.font = [UIFont systemFontOfSize:14.0];
+        NSMutableAttributedString *titleAttributedStr = [[NSMutableAttributedString alloc] initWithString:[NSString stringWithFormat:@"共搜索到%d个 ", [resultArray count]] attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14.0]}];
+        
+        [titleAttributedStr appendAttributedString:[[NSMutableAttributedString alloc] initWithString:strKeyWord attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:15.0], NSForegroundColorAttributeName: [UIColor grayColor]}]];
+        
+        [titleAttributedStr appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@" 相关的结果" attributes:@{NSFontAttributeName: [UIFont systemFontOfSize:14.0]}]];
+        
+        _titleLable.attributedText = titleAttributedStr;
         _titleLable.textAlignment = NSTextAlignmentCenter;
+        _titleLable.backgroundColor = [UIColor clearColor];
     }
     
     return _titleLable;
@@ -140,6 +149,14 @@ COResultListView *resultListView =nil;
 
     
     return collectionCell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(self.DidSelectResultInfoBlock)
+    {
+        self.DidSelectResultInfoBlock([indexPath row]);
+    }
 }
 
 #pragma mark --UICollectionViewDelegateFlowLayout

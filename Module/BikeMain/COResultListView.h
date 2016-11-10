@@ -10,7 +10,9 @@
 
 @interface COResultListView : UIView
 
-- (instancetype)initWithArrayData:(NSArray *)resultData;
+@property (nonatomic, copy) void (^DidSelectResultInfoBlock)(NSInteger index);
+
+- (instancetype)initWithKeyWord:(NSString *)strKeyword InfoData:(NSArray *)resultData;
 
 - (void)showView;
 
