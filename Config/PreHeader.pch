@@ -32,5 +32,6 @@
 #import "UIImage+resize.h"
 #import "Reachability.h"
 #import "BMapKit.h"
+#import "UINavigationBar+NavigationBackground.h"
 
 #endif /* PreHeader_pch */

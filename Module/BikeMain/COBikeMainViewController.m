@@ -26,9 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    [self.view addSubview:self.headView];
+    
     [self.view addSubview:self.customView];
+    [self setupNavigationView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -47,40 +47,39 @@
 
 - (void)addUIConstraints
 {
-    [self.headView mas_makeConstraints:^(MASConstraintMaker *make) {
-        
-        make.left.top.right.equalTo(self.view);
-        make.height.mas_equalTo(NavBarHeight);
-        
-    }];
-    
     [self.customView mas_makeConstraints:^(MASConstraintMaker *make) {
         
-        make.left.right.bottom.equalTo(self.view);
-        
-        make.top.equalTo(_headView.mas_bottom);
+        make.left.top.right.bottom.equalTo(self.view);
+    
     }];
 }
 
+#pragma mark 
+
+- (void)setupNavigationView
+{
+    [self setTitle:@"CoBicycle"];
+    
+    [self.navigationController.navigationBar co_setbackgroundWithColor:navigaterBarColor];
+    
+    UIButton *headBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 40, 40)];
+    
+    NSData *dataImage = [self.viewModel getLocalUserImage];
+    
+    UIImage *image = [UIImage imageWithData:dataImage];
+    
+    headBtn.layer.cornerRadius = 20;
+    headBtn.layer.borderColor = [UIColor whiteColor].CGColor;
+    [headBtn setBackgroundImage:image forState:UIControlStateNormal];
+    [headBtn addTarget:self action:@selector(headbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc] initWithCustomView:headBtn];
+    
+    self.navigationItem.leftBarButtonItem = leftBarItem;
+}
 
 #pragma mark lazy load
-
-- (COBMHeaderView *)headView
-{
-    if(_headView == nil)
-    {
-        NSData *dataImage = [self.viewModel getLocalUserImage];
-        _headView = [[COBMHeaderView alloc] initWithTitle:@"COBicycle" HeaderImage:dataImage];
-        
-        _headView.leftbtnClickBlock = ^{
-            
-            [[AppDelegate globalDelegate] toggleDrawLeft];
-        };
-        
-    }
-    
-    return _headView;
-}
 
 - (COBMCustomView *)customView
 {
@@ -108,6 +107,13 @@
     }
     
     return _viewModel;
+}
+
+#pragma mark headBtn-action
+
+- (void)headbtnClicked:(id)sender
+{
+    [[AppDelegate globalDelegate] toggleDrawLeft];
 }
 
 

@@ -39,7 +39,7 @@
     {
         [self.contentView addSubview:self.headImage];
         [self.contentView addSubview:self.headLabel];
-        [self.contentView addSubview:self.subImage];
+        //[self.contentView addSubview:self.subImage];
         self.backgroundColor = [UIColor clearColor];
         
         [self addUIConstraints];
@@ -64,16 +64,8 @@
         
         make.centerY.equalTo(self.contentView);
         make.left.equalTo(self.headImage.mas_right).offset(10);
-        make.width.equalTo(self.contentView.mas_width).multipliedBy(0.3);
+        make.width.equalTo(self.contentView.mas_width);
         make.height.equalTo(self.contentView.mas_height);
-    }];
-    
-    [self.subImage mas_makeConstraints:^(MASConstraintMaker *make) {
-       
-        make.centerY.equalTo(self.contentView);
-        make.left.equalTo(self.headLabel.mas_right).offset(5);
-        make.height.width.mas_equalTo(40);
-        
     }];
 }
 
@@ -96,7 +88,7 @@
     {
         _headLabel = [[UILabel alloc] init];
         
-        _headLabel.textColor = [UIColor whiteColor];
+        _headLabel.textColor = [UIColor blackColor];
         _headLabel.font = [UIFont systemFontOfSize:16.0];
         _headLabel.backgroundColor = [UIColor clearColor];
     }
@@ -118,7 +110,7 @@
 
 - (void)setCellModel:(COUserSettingCellModel *)cellModel
 {
-    [_headImage sd_setImageWithURL:[NSURL URLWithString:cellModel.headimageStr] placeholderImage:[UIImage imageNamed:@"defaultheadImage"]];
+    [_headImage sd_setImageWithURL:[NSURL URLWithString:cellModel.headimageStr] placeholderImage:[UIImage imageNamed:@"Album"]];
     
     _headLabel.text = cellModel.headTitle;
     

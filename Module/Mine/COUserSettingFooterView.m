@@ -7,6 +7,7 @@
 //
 
 #import "COUserSettingFooterView.h"
+#import "COUserSettingFootModel.h"
 
 @interface COUserSettingFooterView()
 
@@ -54,6 +55,18 @@
     }
     
     return _imageView;
+}
+
+#pragma mark member function
+
+- (void)setFootModel:(COUserSettingFootModel *)footModel
+{
+    _footModel = footModel;
+    
+    NSURL *url = [NSURL URLWithString:footModel.imageUrl];
+    
+    [self.imageView sd_setImageWithURL:url placeholderImage:[[UIImage imageNamed:@"placeholder_60x60"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]];
+    
 }
 
 @end

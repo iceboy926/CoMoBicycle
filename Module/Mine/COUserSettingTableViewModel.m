@@ -59,7 +59,6 @@
                     {
                         [self.infoArray addObject:cellModel];
                     }
-                    
                 }
             }
         
@@ -84,6 +83,7 @@
     if(cell)
     {
         cell.cellModel = self.infoArray[[indexPath row]];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     
     return cell;

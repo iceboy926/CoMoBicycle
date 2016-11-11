@@ -7,11 +7,14 @@
 //
 
 #import "COUserSettingViewController.h"
-#import "COUserSettingHeaderView.h"
-#import "COUserSettingFooterView.h"
 #import "COUserSettingTableViewModel.h"
+#import "COUserSettingHeaderView.h"
 #import "COUserSettingHeadViewModel.h"
 #import "COUserSettingHeadModel.h"
+
+#import "COUserSettingFooterView.h"
+#import "COUserSettingFootModel.h"
+#import "COUserSettingFootViewModel.h"
 
 @interface COUserSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 
@@ -21,6 +24,8 @@
 
 @property (nonatomic, strong) COUserSettingTableViewModel *settingViewModel;
 @property (nonatomic, strong) COUserSettingHeadViewModel *headViewModel;
+
+@property (nonatomic, strong) COUserSettingFootViewModel *footViewModel;
 
 @end
 
@@ -33,7 +38,30 @@
     [self.view addSubview:self.settingHeaderView];
     [self.view addSubview:self.settingTableView];
     [self.view addSubview:self.settingFooterView];
+    
+    
+    [self setNavigationBar];
+    //[self.navigationController.navigationBar setBackgroundColor:[UIColor clearColor]];
 
+}
+
+- (void)setNavigationBar
+{
+    [self.navigationController.navigationBar setTranslucent:YES];
+    
+    UIColor *color = [UIColor clearColor];
+    
+    CGRect rect = CGRectMake(0, 0, MAX_WIDTH, 64);
+    
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self.navigationController.navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+    
+    self.navigationController.navigationBar.clipsToBounds = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -98,7 +126,12 @@
         _settingTableView.delegate = self;
         _settingTableView.dataSource = self;
         _settingTableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-        _settingTableView.backgroundColor = shadowViewColor;
+        _settingTableView.backgroundColor = [UIColor whiteColor];
+        
+        if([_settingTableView respondsToSelector:@selector(setEstimatedRowHeight:)])
+        {
+            [_settingTableView setEstimatedRowHeight:64.0];
+        }
     }
     
     return _settingTableView;
@@ -135,6 +168,16 @@
     return _headViewModel;
 }
 
+- (COUserSettingFootViewModel *)footViewModel
+{
+    if(_footViewModel == nil)
+    {
+        _footViewModel = [[COUserSettingFootViewModel alloc] init];
+        
+    }
+    return _footViewModel;
+}
+
 
 #pragma mark custom function
 
@@ -148,6 +191,13 @@
         [weakself.settingHeaderView setHeadModel:headModel];
         
     }];
+    
+    [self.footViewModel fetchUserSettingFootDataWithCallBack:^(id response) {
+       
+        COUserSettingFootModel *footModel = [[COUserSettingFootModel alloc] initWithDictionary:response];
+        
+        [weakself.settingFooterView setFootModel:footModel];
+    }];
 }
 
 
@@ -160,7 +210,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self.settingViewModel tableView:tableView cellForRowAtIndexPath:indexPath];
+    return (UITableViewCell *)[self.settingViewModel tableView:tableView cellForRowAtIndexPath:indexPath];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

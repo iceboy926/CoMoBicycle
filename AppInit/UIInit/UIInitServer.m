@@ -43,8 +43,12 @@
     else
     {
         //主界面
-        self.drawerController.centerViewController = [[COMediator shareInstance] COBikeComponet_ViewController];
-        self.drawerController.leftDrawerViewController = [[COMediator shareInstance] COUserSettingComponet_ViewController];
+        UINavigationController *leftNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COBikeComponet_ViewController]];
+        self.drawerController.centerViewController = leftNavController;
+        
+        UINavigationController *centerNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COUserSettingComponet_ViewController]];
+        
+        self.drawerController.leftDrawerViewController = centerNavController;
         
     
         [self.drawerController setMaximumLeftDrawerWidth:WIDTH_TO_FIT(250)];
