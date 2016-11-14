@@ -119,4 +119,30 @@
     }
 }
 
+- (void)closeDrawleftAnimated:(BOOL)animated completion:(void(^)(BOOL finished))completion
+{
+    id<UIApplicationDelegate> service;
+    for (service in [[ServiceComponent shareInstance] services]) {
+        if([service isKindOfClass:[UIInitServer class]])
+        {
+            [(UIInitServer *)service closeLeftViewAnimated:animated completion:completion];
+        }
+    }
+}
+
+- (UINavigationController *)rootNavigationController
+{
+    id<UIApplicationDelegate> service;
+    for (service in [[ServiceComponent shareInstance] services]) {
+        if([service isKindOfClass:[UIInitServer class]])
+        {
+            MMDrawerController *drawerController = [(UIInitServer *)service drawerController];
+            
+            return (UINavigationController *)drawerController.centerViewController;
+        }
+    }
+
+    return nil;
+}
+
 @end

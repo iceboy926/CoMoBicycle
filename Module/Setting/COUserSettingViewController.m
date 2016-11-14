@@ -16,6 +16,13 @@
 #import "COUserSettingFootModel.h"
 #import "COUserSettingFootViewModel.h"
 
+#import "AppDelegate.h"
+#import "COMediator+COMyZoneComponet.h"
+#import "COMediator+COMyFavorComponet.h"
+#import "COMediator+COMyAlbumComponet.h"
+#import "COMediator+COMyFolderComponet.h"
+
+
 @interface COUserSettingViewController() <UITableViewDataSource, UITableViewDelegate>
 
 @property (nonatomic, strong) COUserSettingHeaderView *settingHeaderView;
@@ -41,8 +48,6 @@
     
     
     [self setNavigationBar];
-    //[self.navigationController.navigationBar setBackgroundColor:[UIColor clearColor]];
-
 }
 
 - (void)setNavigationBar
@@ -220,8 +225,81 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    [self closeSlideMenu:[indexPath row]];
 }
+
+#pragma mark function
+
+- (void)closeSlideMenu:(NSInteger) index
+{
+    switch (index) {
+        case 0:
+            
+            [[AppDelegate globalDelegate] closeDrawleftAnimated:YES completion:^(BOOL blfinished){
+            
+                if(blfinished)
+                {
+                    UIViewController *viewcontroller = [[COMediator shareInstance] COMyZoneComponet_ViewController];
+                
+                    [[[AppDelegate globalDelegate] rootNavigationController] pushViewController:viewcontroller animated:YES];
+                }
+            
+            }];
+            
+            break;
+        case 1:
+            
+            [[AppDelegate globalDelegate] closeDrawleftAnimated:YES completion:^(BOOL blfinished){
+            
+                if(blfinished)
+                {
+                    UIViewController *viewcontroller = [[COMediator shareInstance] COMyFavorComponet_ViewController];
+                    
+                    [[AppDelegate globalDelegate].rootNavigationController pushViewController:viewcontroller animated:YES];
+                    
+                }
+            
+            }];
+            
+            break;
+            
+        case 2:
+            
+            [[AppDelegate globalDelegate] closeDrawleftAnimated:YES completion:^(BOOL blfinished){
+            
+                if(blfinished)
+                {
+                    UIViewController *viewcontroller = [[COMediator shareInstance] COMyAlbumComponet_ViewController];
+                    
+                    [[AppDelegate globalDelegate].rootNavigationController pushViewController:viewcontroller animated:YES];
+                }
+            
+            }];
+            
+            
+            break;
+            
+        case 3:
+            
+            [[AppDelegate globalDelegate] closeDrawleftAnimated:YES completion:^(BOOL blfinished){
+    
+                if(blfinished)
+                {
+                    UIViewController *viewcontroller = [[COMediator shareInstance] COMyFolderComponet_ViewController];
+                    
+                    [[AppDelegate globalDelegate].rootNavigationController pushViewController:viewcontroller animated:YES];
+                }
+            
+            }];
+            
+            
+            break;
+        default:
+            break;
+    }
+}
+
+
 
 
 @end

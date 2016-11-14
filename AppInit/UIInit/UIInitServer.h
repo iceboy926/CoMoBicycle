@@ -10,6 +10,12 @@
 
 @interface UIInitServer : NSObject <UIApplicationDelegate>
 
+@property (nonatomic, strong)MMDrawerController *drawerController;
+
 - (void)toggleLeftView;
+
+- (void)closeLeftViewAnimated:(BOOL)animated completion:(void (^)(BOOL blfinised))completion;
+
+
 
 @end

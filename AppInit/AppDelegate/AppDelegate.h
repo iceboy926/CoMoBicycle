@@ -20,5 +20,9 @@
 
 - (void)toggleDrawLeft;
 
+- (void)closeDrawleftAnimated:(BOOL)animated completion:(void(^)(BOOL finished))completion;
+
+- (UINavigationController *)rootNavigationController;
+
 @end
 

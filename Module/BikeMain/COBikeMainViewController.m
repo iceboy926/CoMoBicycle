@@ -7,14 +7,12 @@
 //
 
 #import "COBikeMainViewController.h"
-#import "COBMHeaderView.h"
 #import "COBMCustomView.h"
 #import "COBMViewModel.h"
 #import "AppDelegate.h"
 
 @interface COBikeMainViewController()
 
-@property (nonatomic, strong) COBMHeaderView *headView;
 @property (nonatomic, strong) COBMCustomView   *customView;
 @property (nonatomic, strong) COBMViewModel     *viewModel;
 
@@ -62,7 +60,12 @@
     
     [self.navigationController.navigationBar co_setbackgroundWithColor:navigaterBarColor];
     
-    UIButton *headBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 20, 40, 40)];
+    UIBarButtonItem *seperatorBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
+    
+    seperatorBarItem.width = -10;
+    
+    
+    UIButton *headBtn = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 40, 40)];
     
     NSData *dataImage = [self.viewModel getLocalUserImage];
     
@@ -72,11 +75,19 @@
     headBtn.layer.borderColor = [UIColor whiteColor].CGColor;
     [headBtn setBackgroundImage:image forState:UIControlStateNormal];
     [headBtn addTarget:self action:@selector(headbtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    
-    
+
     UIBarButtonItem *leftBarItem = [[UIBarButtonItem alloc] initWithCustomView:headBtn];
+
     
-    self.navigationItem.leftBarButtonItem = leftBarItem;
+    if(ISIOS7)
+    {
+        self.navigationItem.leftBarButtonItems = @[seperatorBarItem, leftBarItem];
+    }
+    else
+    {
+        self.navigationItem.leftBarButtonItem = leftBarItem;
+    }
+    
 }
 
 #pragma mark lazy load

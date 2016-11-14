@@ -13,7 +13,7 @@
 
 @interface UIInitServer()
 
-@property (nonatomic, strong)MMDrawerController *drawerController;
+
 
 @end
 
@@ -43,12 +43,12 @@
     else
     {
         //主界面
-        UINavigationController *leftNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COBikeComponet_ViewController]];
-        self.drawerController.centerViewController = leftNavController;
+        UINavigationController *CenterNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COBikeComponet_ViewController]];
+        self.drawerController.centerViewController = CenterNavController;
         
-        UINavigationController *centerNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COUserSettingComponet_ViewController]];
+        UINavigationController *leftNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COUserSettingComponet_ViewController]];
         
-        self.drawerController.leftDrawerViewController = centerNavController;
+        self.drawerController.leftDrawerViewController = leftNavController;
         
     
         [self.drawerController setMaximumLeftDrawerWidth:WIDTH_TO_FIT(250)];
@@ -108,5 +108,9 @@
     [self.drawerController toggleDrawerSide:MMDrawerSideLeft animated:YES completion:nil];
 }
 
+- (void)closeLeftViewAnimated:(BOOL)animated completion:(void (^)(BOOL blfinised))completion
+{
+    [self.drawerController closeDrawerAnimated:animated completion:completion];
+}
 
 @end
