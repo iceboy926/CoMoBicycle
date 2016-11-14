@@ -11,6 +11,7 @@
 #import "COMediator+COBikeMainComponet.h"
 #import "COMediator+COUserSettingComponet.h"
 
+
 @interface UIInitServer()
 
 
