@@ -20,17 +20,19 @@
     
     //动态更改导航背景/样式
     UINavigationBar *bar = [UINavigationBar appearance];
-    //[bar setBarTintColor:[UIColor colorWithHexString:@"#303030"]];
+    [bar setBarTintColor:navigaterBarColor];
+    
+    [bar setTranslucent:NO];
     
     [bar setTintColor:[UIColor whiteColor]];
     
     [bar setTitleTextAttributes:@{
-                                  NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]
+                                  NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:16]
                                   }];
     //导航条中按钮的颜色
     UIBarButtonItem *item = [UIBarButtonItem appearance];
     [item setTitleTextAttributes:@{
-                                   NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:20]
+                                   NSForegroundColorAttributeName:[UIColor whiteColor],NSFontAttributeName:[UIFont boldSystemFontOfSize:16]
                                    }forState:UIControlStateNormal];
     
     

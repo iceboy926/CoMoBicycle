@@ -136,7 +136,6 @@
 {
     Userinfo *userinfo = [[UserinfoManager sharedManager] addUserWithUser:self.username WithNick:self.nickname WithImageData:self.headImageData];
     
-    
 }
 
 

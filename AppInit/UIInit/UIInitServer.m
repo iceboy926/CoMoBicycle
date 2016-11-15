@@ -10,6 +10,7 @@
 #import "COMediator+COLoginRegistComponet.h"
 #import "COMediator+COBikeMainComponet.h"
 #import "COMediator+COUserSettingComponet.h"
+#import "COBaseNavigationController.h"
 
 
 @interface UIInitServer()
@@ -44,10 +45,10 @@
     else
     {
         //主界面
-        UINavigationController *CenterNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COBikeComponet_ViewController]];
+        COBaseNavigationController *CenterNavController = [[COBaseNavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COBikeComponet_ViewController]];
         self.drawerController.centerViewController = CenterNavController;
         
-        UINavigationController *leftNavController = [[UINavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COUserSettingComponet_ViewController]];
+        COBaseNavigationController *leftNavController = [[COBaseNavigationController alloc] initWithRootViewController:[[COMediator shareInstance] COUserSettingComponet_ViewController]];
         
         self.drawerController.leftDrawerViewController = leftNavController;
         

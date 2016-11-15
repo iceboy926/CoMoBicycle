@@ -58,8 +58,6 @@
 {
     [self setTitle:@"CoBicycle"];
     
-    [self.navigationController.navigationBar co_setbackgroundWithColor:navigaterBarColor];
-    
     UIBarButtonItem *seperatorBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace target:nil action:nil];
     
     seperatorBarItem.width = -10;
