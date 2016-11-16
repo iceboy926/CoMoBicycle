@@ -121,7 +121,7 @@
     _headModel = headModel;
     
     NSURL *imageUrl = [NSURL URLWithString:headModel.headImageUrl];
-    [_headImage sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"placeholder_60x60"]];
+    [_headImage sd_setImageWithURL:imageUrl placeholderImage:[UIImage imageNamed:@"placeholderimage"]];
     
     _titleLabel.text = headModel.titleStr;
     

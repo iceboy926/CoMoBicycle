@@ -51,7 +51,7 @@
     {
         _imageView = [[UIImageView alloc] init];
         
-        _imageView.image = [[UIImage imageNamed:@"placeholder_60x60"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
+        _imageView.image = [[UIImage imageNamed:@"placeholderimage"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)];
     }
     
     return _imageView;
@@ -65,7 +65,7 @@
     
     NSURL *url = [NSURL URLWithString:footModel.imageUrl];
     
-    [self.imageView sd_setImageWithURL:url placeholderImage:[[UIImage imageNamed:@"placeholder_60x60"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]];
+    [self.imageView sd_setImageWithURL:url placeholderImage:[[UIImage imageNamed:@"placeholderimage"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5)]];
     
 }
 
